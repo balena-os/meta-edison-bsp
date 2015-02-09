@@ -5,10 +5,9 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=f9986853fb3b3403700e7535a392d014"
 inherit module
 
 PV = "1.141"
-PR = "r47"
+PR = "r48"
 
-S = "${EDISONREPO_TOP_DIR}/broadcom_cws/wlan/driver_bcm43x/"
+SRC_URI = "file://broadcom_cws.tar.bz2"
 
-do_clean() {
-    make clean
-}
+S = "${WORKDIR}/broadcom_cws/wlan/driver_bcm43x"
+

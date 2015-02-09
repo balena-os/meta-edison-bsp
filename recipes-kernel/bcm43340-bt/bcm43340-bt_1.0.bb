@@ -1,18 +1,14 @@
 DESCRIPTION = "Broadcom Bluetooth fw files and patch utility"
 SECTION = "connectivity"
 
-FILESEXTRAPATHS_prepend := "${EDISONREPO_TOP_DIR}/broadcom_cws/bluetooth/firmware/"
+FILESEXTRAPATHS_prepend := "${THISDIR}/../bcm43340/files:"
 
-SRC_URI = "file://BCM43341B0_002.001.014.0122.0166.hcd \
-           file://brcm_patchram_plus.c \
-           file://LICENCE.broadcom_bcm43xx"
+SRC_URI = "file://broadcom_cws.tar.bz2"
 
 LICENSE = "Proprietary"
 LIC_FILES_CHKSUM = "file://LICENCE.broadcom_bcm43xx;md5=3160c14df7228891b868060e1951dfbc"
 
-S = "${WORKDIR}"
-
-FILESDIR = "${FILE_DIRNAME}/files/"
+S = "${WORKDIR}/broadcom_cws/bluetooth/firmware/"
 
 do_compile() {
         ${CC} -O2 -Wall -o brcm_patchram_plus brcm_patchram_plus.c
