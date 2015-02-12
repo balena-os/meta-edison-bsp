@@ -28,7 +28,7 @@ do_bootimg[depends] += "${PN}:do_rootfs"
 
 IMAGE_ROOTFS_SIZE = "524288"
 
-#IMAGE_INSTALL += "u-boot \
-#                  u-boot-fw-utils"
+IMAGE_INSTALL += "u-boot \
+                  u-boot-fw-utils"
 
 
