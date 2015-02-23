@@ -28,3 +28,14 @@ do_bootimg[depends] += "${PN}:do_rootfs"
 
 IMAGE_ROOTFS_SIZE = "524288"
 
+ROOTFS_POSTPROCESS_COMMAND += " edison_image_fixup ; "
+
+edison_image_fixup() {
+
+	cd ${IMAGE_ROOTFS}
+
+	# set watchdog to 90 seconds
+	if [ -e etc/systemd/system.conf ] ; then
+		sed -i -e 's/#RuntimeWatchdogSec=0/RuntimeWatchdogSec=90/' etc/systemd/system.conf
+	fi
+}
