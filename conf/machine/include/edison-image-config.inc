@@ -2,6 +2,8 @@
 
 IMAGE_ROOTFS_SIZE = "524288"
 
+IMAGE_FEATURES += "debug-tweaks package-management"
+
 # Do not use initrd
 INITRD = ""
 INITRD_IMAGE = ""
@@ -27,8 +29,6 @@ NOHDD = "0"
 
 inherit bootimg
 do_bootimg[depends] += "${PN}:do_rootfs"
-
-IMAGE_FEATURES += "debug-tweaks"
 
 ROOTFS_POSTPROCESS_COMMAND += " edison_image_fixup ; "
 
