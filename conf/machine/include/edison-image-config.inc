@@ -41,3 +41,11 @@ edison_image_fixup() {
 		sed -i -e 's/#RuntimeWatchdogSec=0/RuntimeWatchdogSec=90/' etc/systemd/system.conf
 	fi
 }
+
+ROOTFS_POSTPROCESS_COMMAND =+ " add_custom_smart_config ; "
+
+add_custom_smart_config() {
+        smart	--data-dir=${IMAGE_ROOTFS}/var/lib/smart channel \
+		--add edison type=rpm-md name="Edison Package Repository" \
+		baseurl=http://sandbox.sakoman.com/feeds/edison-12.0.1/repo/rpm/ -y
+}
