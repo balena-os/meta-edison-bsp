@@ -12,6 +12,7 @@ SRC_URI = " \
 	   file://flashall.sh \
 	   file://ota_update.cmd \
 	   file://pft-config-edison.xml \
+	   file://FlashEdison.json \
 	  "
 
 S="${WORKDIR}"
@@ -29,6 +30,8 @@ do_deploy () {
 	install ${S}/flashall.*			${DEPLOYDIR}/flashall
 	install ${S}/ota_update.cmd		${DEPLOYDIR}/flashall
 	install ${S}/pft-config-edison.xml	${DEPLOYDIR}/flashall
+	install ${S}/FlashEdison.json		${DEPLOYDIR}/flashall
+
 }
 
 addtask deploy before do_build after do_compile
