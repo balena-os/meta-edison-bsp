@@ -16,7 +16,7 @@ set IFWI_DFU_FILE=%BASE_DIR%edison_ifwi-dbg
 set VAR_DIR=%BASE_DIR%u-boot-envs\
 set VARIANT_NAME_DEFAULT=edison-defaultrndis
 set VARIANT_NAME_BLANK=edison-blankrndis
-set VARIANT_NAME=%VARIANT_NAME_BLANK%
+set VARIANT_NAME=%VARIANT_NAME_DEFAULT%
 
 set LOG_FILENAME=flash.log
 set /a verbose_output=0
