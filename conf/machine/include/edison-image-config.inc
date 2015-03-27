@@ -17,6 +17,17 @@ edison_image_fixup() {
 	if [ -e etc/systemd/system.conf ] ; then
 		sed -i -e 's/#RuntimeWatchdogSec=0/RuntimeWatchdogSec=90/' etc/systemd/system.conf
 	fi
+
+	# add wpa_supplicant config for wlan0
+	if [ -e etc/wpa_supplicant.conf ] ; then
+		mkdir etc/wpa_supplicant
+		cp etc/wpa_supplicant.conf etc/wpa_supplicant/wpa_supplicant-wlan0.conf
+		ln -s /lib/systemd/system/wpa_supplicant@.service etc/systemd/system/multi-user.target.wants/wpa_supplicant@wlan0.service
+		echo "[Match]"    >  etc/systemd/network/wlan0.network
+		echo "Name=wlan0" >> etc/systemd/network/wlan0.network
+		echo "[Network]"  >> etc/systemd/network/wlan0.network
+		echo "DHCP=yes"   >> etc/systemd/network/wlan0.network
+	fi
 }
 
 ROOTFS_POSTPROCESS_COMMAND =+ " add_custom_smart_config ; "
