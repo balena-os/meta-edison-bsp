@@ -5,7 +5,7 @@
 # so adjust to 1572864 - 51200
 IMAGE_ROOTFS_SIZE = "1521664"
 
-IMAGE_FEATURES += "debug-tweaks package-management"
+IMAGE_FEATURES += "debug-tweaks package-management ssh-server-openssh"
 
 ROOTFS_POSTPROCESS_COMMAND += " edison_image_fixup ; "
 
