@@ -1,20 +1,29 @@
 inherit image_types
 
 IMAGE_DEPENDS_boot = "virtual/kernel dosfstools-native mtools-native"
+IMAGE_TYPEDEP_boot = "ext4 tar"
 
 IMAGE_CMD_boot () {
 
-	BLOCKS=6144
+	BLOCKS=32768
 	rm -f ${WORKDIR}/boot.img
 
 	mkfs.vfat -n "boot" -S 512 -C ${WORKDIR}/boot.img $BLOCKS
-	mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bzImage ::/vmlinuz
+
+	# Copy kernel
+	mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bzImage-edison.bin ::/vmlinuz
+
+	# Copy fota kernel (includes initramfs)
+	if [ -e ${DEPLOY_DIR_IMAGE}/bzImage-initramfs-edison.bin ]; then
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bzImage-initramfs-edison.bin ::/vmlinuzi
+	fi
 
 	install ${WORKDIR}/boot.img ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.hddimg
 	ln -s ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.hddimg ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.hddimg
 }
 
 IMAGE_DEPENDS_toflash = "ifwi flashall u-boot u-boot-mkimage-native"
+IMAGE_TYPEDEP_toflash = "ext4 boot"
 
 IMAGE_CMD_toflash () {
 
@@ -57,5 +66,3 @@ IMAGE_CMD_toflash () {
 	rm -f ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.toflash.tar.bz2
 	ln -s ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.toflash.tar.bz2 ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.toflash.tar.bz2
 }
-
-IMAGE_TYPEDEP_toflash = "ext4 boot"
