@@ -42,7 +42,6 @@ IMAGE_CMD_toflash () {
 	install ${DEPLOY_DIR_IMAGE}/flashall/filter-dfu-out.js		${WORKDIR}/toFlash/
 	install ${DEPLOY_DIR_IMAGE}/flashall/flashall.*			${WORKDIR}/toFlash/
 	install ${DEPLOY_DIR_IMAGE}/flashall/ota_update.cmd		${WORKDIR}/toFlash/
-	install ${DEPLOY_DIR_IMAGE}/flashall/pft-config-edison.xml	${WORKDIR}/toFlash/
 	install ${DEPLOY_DIR_IMAGE}/flashall/FlashEdison.json		${WORKDIR}/toFlash/
 
 	# Preprocess OTA script

@@ -5,13 +5,14 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=ea398a763463b76b18da15f013c0c531"
 
 inherit deploy
 
+PR = "r1"
+
 SRC_URI = " \
 	   file://LICENSE \
 	   file://filter-dfu-out.js \
 	   file://flashall.bat \
 	   file://flashall.sh \
 	   file://ota_update.cmd \
-	   file://pft-config-edison.xml \
 	   file://FlashEdison.json \
 	  "
 
@@ -29,7 +30,6 @@ do_deploy () {
 	install ${S}/filter-dfu-out.js		${DEPLOYDIR}/flashall
 	install ${S}/flashall.*			${DEPLOYDIR}/flashall
 	install ${S}/ota_update.cmd		${DEPLOYDIR}/flashall
-	install ${S}/pft-config-edison.xml	${DEPLOYDIR}/flashall
 	install ${S}/FlashEdison.json		${DEPLOYDIR}/flashall
 
 }
