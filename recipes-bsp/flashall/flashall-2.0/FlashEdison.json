@@ -135,7 +135,7 @@
     "description" : "U-Boot primary environment",
     "name" : "U-Boot primary environment",
     "type" : "file",
-    "value" : "u-boot-envs/edison-defaultrndis.bin"
+    "value" : "u-boot-envs/edison-blankrndis.bin"
    },
    "u-boot_file" :    {
     "description" : "U-Boot",

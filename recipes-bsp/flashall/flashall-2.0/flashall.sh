@@ -36,7 +36,7 @@ else
 	VARIANT_NAME_DEFAULT="edison-defaultcdc"
 	VARIANT_NAME_BLANK="edison-blankcdc"
 fi
-VARIANT_NAME=$VARIANT_NAME_DEFAULT
+VARIANT_NAME=$VARIANT_NAME_BLANK
 
 LOG_FILENAME="flash.log"
 OUTPUT_LOG_CMD="2>&1 | tee -a ${LOG_FILENAME} | ( sed -n '19 q'; head -n 1; cat >/dev/null )"
