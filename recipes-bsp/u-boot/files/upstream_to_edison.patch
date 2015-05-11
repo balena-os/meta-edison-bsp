@@ -1,9 +1,9 @@
-From 084994e3140fb25fc9e0c96b48d03693bee7b28b Mon Sep 17 00:00:00 2001
-From: Jenkins <dswci@intel.com>
-Date: Fri, 30 Jan 2015 14:23:54 +0100
+From d2babffd1f96d05b5b5d1556b9d039a7cd232cd6 Mon Sep 17 00:00:00 2001
+From: Simon Desfarges <simon.desfarges@intel.com>
+Date: Thu, 12 Mar 2015 14:07:36 +0100
 Subject: [PATCH] Squashed all commits from upstream to Edison
 
-Change-Id: I1966c64a6433cfe814361fe44e46a8313db9e653
+Change-Id: Ibcec2956fa1cac0fe1923a58497fc7d8851223cb
 ---
  Makefile                                       |    1 +
  arch/x86/config.mk                             |    4 +-
@@ -30,12 +30,14 @@ Change-Id: I1966c64a6433cfe814361fe44e46a8313db9e653
  arch/x86/include/asm/msr-index.h               |   46 +-
  arch/x86/include/asm/sfi.h                     |  119 ++
  arch/x86/lib/Makefile                          |    1 +
+ arch/x86/lib/interrupts.c                      |    2 +-
  arch/x86/lib/sfi.c                             |  162 ++
  arch/x86/lib/tsc_timer.c                       |    6 +-
  arch/x86/lib/zimage.c                          |    4 +
  board/intel/edison/Makefile                    |    1 +
  board/intel/edison/config.mk                   |    7 +
  board/intel/edison/edison.c                    |   54 +
+ board/intel/edison/edison.h                    |    0
  board/intel/edison/edison_start.S              |   13 +
  boards.cfg                                     |    1 +
  common/Makefile                                |    2 +
@@ -85,7 +87,7 @@ Change-Id: I1966c64a6433cfe814361fe44e46a8313db9e653
  include/linux/usb/gadget.h                     |   15 +-
  include/usb/fastboot.h                         |  100 ++
  pft-config.xml                                 |   28 +
- 80 files changed, 9997 insertions(+), 42 deletions(-)
+ 82 files changed, 9998 insertions(+), 43 deletions(-)
  create mode 100644 arch/x86/cpu/tangier/Makefile
  create mode 100644 arch/x86/cpu/tangier/board_id.c
  create mode 100644 arch/x86/cpu/tangier/car.S
@@ -1717,6 +1719,19 @@ index f7303ab..85274ab 100644
  
  LIBGCC := $(notdir $(NORMAL_LIBGCC))
  extra-y := $(LIBGCC)
+diff --git a/arch/x86/lib/interrupts.c b/arch/x86/lib/interrupts.c
+index 6bb22d2..146ad11 100644
+--- a/arch/x86/lib/interrupts.c
++++ b/arch/x86/lib/interrupts.c
+@@ -130,7 +130,7 @@ int do_irqinfo(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+ 	printf("Interrupt-Information:\n");
+ 	printf("Nr  Routine   Arg       Count\n");
+ 
+-	for (irq = 0; irq <= CONFIG_SYS_NUM_IRQS; irq++) {
++	for (irq = 0; irq < CONFIG_SYS_NUM_IRQS; irq++) {
+ 		if (irq_handlers[irq].handler != NULL) {
+ 			printf("%02d  %08lx  %08lx  %d\n",
+ 					irq,
 diff --git a/arch/x86/lib/sfi.c b/arch/x86/lib/sfi.c
 new file mode 100644
 index 0000000..675ad88
@@ -11153,5 +11168,5 @@ index 0000000..885875f
 +        </code_group>
 +</flashfile>
 -- 
-1.7.9.5
+1.9.1
 

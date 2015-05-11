@@ -8,7 +8,3 @@ SRC_URI += "file://upstream_to_edison.patch"
 SRC_URI += "file://${MACHINE}.env"
 SRC_URI += "file://target_env/*.env"
 SRCREV = "dda0dbfc69f3d560c87f5be85f127ed862ea6721"
-
-do_configure_prepend() {
-    sed -i -e 's:-Werror::g' ${S}/arch/x86/cpu/config.mk
-}
