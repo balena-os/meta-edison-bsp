@@ -1,16 +1,16 @@
-From 0146a06734d5329d58c801e99f1bef8b9c373036 Mon Sep 17 00:00:00 2001
-From: Jenkins <dswci@intel.com>
-Date: Fri, 30 Jan 2015 14:24:05 +0100
+From 689f486a432dbe14c3acb9d3a9b936d5a5b925af Mon Sep 17 00:00:00 2001
+From: zhoushix <shimingx.zhou@intel.com>
+Date: Tue, 21 Apr 2015 21:29:43 +0800
 Subject: [PATCH] Squashed all commits from upstream to Edison
 
-Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
+Change-Id: I1ed3e0e897b4e81c7fd47fe572b18b13becb1245
 ---
  Documentation/kernel-parameters.txt                |    6 +-
  arch/x86/Kconfig                                   |   62 +-
  arch/x86/Kconfig.cpu                               |   19 +-
  arch/x86/Makefile                                  |    2 +
  arch/x86/Makefile_32.cpu                           |    2 +
- arch/x86/configs/i386_edison_defconfig             | 3860 +++++++++++++
+ arch/x86/configs/i386_edison_defconfig             | 3864 +++++++++++++
  arch/x86/configs/i386_mrfl_defconfig               | 3980 ++++++++++++++
  arch/x86/include/asm/apb_timer.h                   |    1 +
  arch/x86/include/asm/bcm_bt_lpm.h                  |   46 +
@@ -41,7 +41,6 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  arch/x86/include/asm/mrst.h                        |   81 -
  arch/x86/include/asm/mwait.h                       |    6 +
  arch/x86/include/asm/platform_byt_audio.h          |   49 +
- arch/x86/include/asm/platform_mrfld_audio.h        |   25 +
  arch/x86/include/asm/platform_sst.h                |  132 +
  arch/x86/include/asm/platform_sst_audio.h          |  161 +
  arch/x86/include/asm/pmic_pdata.h                  |   45 +
@@ -64,7 +63,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  arch/x86/pci/mrst.c                                |   21 +-
  arch/x86/platform/Makefile                         |    2 +-
  arch/x86/platform/intel-mid/Makefile               |   27 +
- arch/x86/platform/intel-mid/board.c                |  166 +
+ arch/x86/platform/intel-mid/board.c                |  165 +
  arch/x86/platform/intel-mid/device_libs/Makefile   |   66 +
  .../platform/intel-mid/device_libs/pci/Makefile    |    6 +
  .../intel-mid/device_libs/pci/platform_sdhci_pci.c |  588 ++
@@ -106,7 +105,8 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  .../device_libs/platform_mrfl_regulator.c          |  125 +
  .../intel-mid/device_libs/platform_mrfl_thermal.c  |  133 +
  .../intel-mid/device_libs/platform_mrfl_thermal.h  |   26 +
- .../intel-mid/device_libs/platform_mrfld_audio.c   |  130 +
+ .../intel-mid/device_libs/platform_mrfld_audio.c   |  151 +
+ .../intel-mid/device_libs/platform_mrfld_audio.h   |   25 +
  .../platform/intel-mid/device_libs/platform_msic.c |   92 +
  .../platform/intel-mid/device_libs/platform_msic.h |   21 +
  .../intel-mid/device_libs/platform_msic_adc.c      |   56 +
@@ -143,8 +143,8 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  .../platform/intel-mid/device_libs/platform_wifi.h |   21 +
  .../intel-mid/device_libs/platform_wl12xx.c        |  182 +
  .../intel-mid/device_libs/platform_wl12xx.h        |   21 +
- .../intel-mid/device_libs/platform_wm8994.c        |  221 +
- .../intel-mid/device_libs/platform_wm8994.h        |    5 +
+ .../intel-mid/device_libs/platform_wm8994.c        |  243 +
+ .../intel-mid/device_libs/platform_wm8994.h        |    6 +
  .../platform/intel-mid/early_printk_intel_mid.c    |  637 +++
  arch/x86/platform/intel-mid/intel-mid.c            |  239 +
  arch/x86/platform/intel-mid/intel_mid_pcihelpers.c |  105 +
@@ -188,7 +188,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  drivers/dma/intel_mid_dma_regs.h                   |  168 +-
  drivers/gpio/Kconfig                               |   11 +
  drivers/gpio/Makefile                              |    1 +
- drivers/gpio/gpio-langwell.c                       | 1061 +++-
+ drivers/gpio/gpio-langwell.c                       | 1076 +++-
  drivers/gpio/gpio-pca953x.c                        |  151 +-
  drivers/gpio/gpiodebug.c                           |  540 ++
  drivers/gpio/gpiodebug.h                           |  108 +
@@ -291,7 +291,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  drivers/rtc/rtc-mrst.c                             |  296 +-
  drivers/spi/Kconfig                                |    9 +
  drivers/spi/Makefile                               |    1 +
- drivers/spi/intel_mid_ssp_spi.c                    | 1787 ++++++
+ drivers/spi/intel_mid_ssp_spi.c                    | 1775 ++++++
  drivers/spi/spi-dw-mid.c                           |  133 +-
  drivers/spi/spi-dw-pci.c                           |  102 +-
  drivers/spi/spi-dw.c                               |  151 +-
@@ -340,6 +340,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  drivers/usb/gadget/udc-core.c                      |   12 +-
  drivers/usb/host/ehci-pci.c                        |    2 +-
  drivers/usb/host/xhci-plat.c                       |   11 +
+ drivers/usb/host/xhci.c                            |    3 +
  drivers/usb/phy/penwell_otg.c                      | 5780 ++++++++++++++++++++
  drivers/watchdog/Kconfig                           |   21 +
  drivers/watchdog/Makefile                          |    1 +
@@ -384,7 +385,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  include/linux/serial_max3110.h                     |   16 +
  include/linux/serial_mfd.h                         |    7 +-
  include/linux/sfi.h                                |    5 +
- include/linux/spi/intel_mid_ssp_spi.h              |  352 ++
+ include/linux/spi/intel_mid_ssp_spi.h              |  354 ++
  include/linux/thermal.h                            |   26 +-
  include/linux/tty_ldisc.h                          |    5 +-
  include/linux/usb/debug.h                          |  253 +
@@ -420,6 +421,8 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  kernel/trace/trace.c                               |    5 +-
  net/bluetooth/l2cap_core.c                         |   20 +-
  net/bluetooth/l2cap_sock.c                         |    5 +-
+ net/ipv4/inet_fragment.c                           |    3 +-
+ net/netfilter/nf_conntrack_proto_dccp.c            |    6 +-
  sound/core/Kconfig                                 |    3 +
  sound/core/Makefile                                |    2 +
  sound/core/compress_offload.c                      |  123 +-
@@ -433,8 +436,8 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  sound/soc/intel/Kconfig                            |   58 +
  sound/soc/intel/Makefile                           |   22 +
  sound/soc/intel/board/Makefile                     |   14 +
- sound/soc/intel/board/merr_dpcm_dummy.c            |  233 +
- sound/soc/intel/board/merr_dpcm_wm8958.c           |  932 ++++
+ sound/soc/intel/board/merr_dpcm_dummy.c            |  201 +
+ sound/soc/intel/board/merr_dpcm_wm8958.c           |  931 ++++
  sound/soc/intel/board/merr_saltbay_wm8958.c        |  887 +++
  sound/soc/intel/compress.c                         |  254 +
  sound/soc/intel/effects.c                          |  405 ++
@@ -458,7 +461,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  sound/soc/intel/sst/sst_app_interface.c            |  342 ++
  sound/soc/intel/sst/sst_debug.c                    | 1328 +++++
  sound/soc/intel/sst/sst_drv_interface.c            | 1111 ++++
- sound/soc/intel/sst/sst_dsp.c                      | 1995 +++++++
+ sound/soc/intel/sst/sst_dsp.c                      | 1992 +++++++
  sound/soc/intel/sst/sst_ipc.c                      |  768 +++
  sound/soc/intel/sst/sst_pvt.c                      |  577 ++
  sound/soc/intel/sst/sst_stream.c                   |  831 +++
@@ -477,7 +480,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  sound/soc/soc-jack.c                               |   14 +-
  sound/soc/soc-pcm.c                                |   83 +-
  sound/soc/soc-utils.c                              |   34 +-
- 472 files changed, 110390 insertions(+), 8166 deletions(-)
+ 475 files changed, 110411 insertions(+), 8173 deletions(-)
  create mode 100644 arch/x86/configs/i386_edison_defconfig
  create mode 100644 arch/x86/configs/i386_mrfl_defconfig
  create mode 100644 arch/x86/include/asm/bcm_bt_lpm.h
@@ -503,7 +506,6 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  delete mode 100644 arch/x86/include/asm/mrst-vrtc.h
  delete mode 100644 arch/x86/include/asm/mrst.h
  create mode 100644 arch/x86/include/asm/platform_byt_audio.h
- create mode 100644 arch/x86/include/asm/platform_mrfld_audio.h
  create mode 100644 arch/x86/include/asm/platform_sst.h
  create mode 100644 arch/x86/include/asm/platform_sst_audio.h
  create mode 100644 arch/x86/include/asm/pmic_pdata.h
@@ -552,6 +554,7 @@ Change-Id: Id0e266dc44eb4f56c9e1970345eba7a1ff2b3baa
  create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_mrfl_thermal.c
  create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_mrfl_thermal.h
  create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.c
+ create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.h
  create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_msic.c
  create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_msic.h
  create mode 100644 arch/x86/platform/intel-mid/device_libs/platform_msic_adc.c
@@ -949,10 +952,10 @@ index 6647ed4..a2eb6c6 100644
  cflags-$(CONFIG_MELAN)		+= -march=i486
 diff --git a/arch/x86/configs/i386_edison_defconfig b/arch/x86/configs/i386_edison_defconfig
 new file mode 100644
-index 0000000..b1ed708
+index 0000000..049b900
 --- /dev/null
 +++ b/arch/x86/configs/i386_edison_defconfig
-@@ -0,0 +1,3860 @@
+@@ -0,0 +1,3864 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
 +# Linux/x86 3.10.17 Kernel Configuration
@@ -2500,7 +2503,7 @@ index 0000000..b1ed708
 +CONFIG_I2C_DESIGNWARE_PCI_FORK=y
 +# CONFIG_I2C_DESIGNWARE_PLATFORM_FORK is not set
 +CONFIG_I2C_DW_SPEED_MODE_DEBUG=y
-+CONFIG_I2C_PMIC=y
++# CONFIG_I2C_PMIC is not set
 +# CONFIG_I2C_DESIGNWARE_PCI is not set
 +# CONFIG_I2C_EG20T is not set
 +CONFIG_I2C_GPIO=y
@@ -3581,7 +3584,7 @@ index 0000000..b1ed708
 +# CONFIG_USB_SERIAL_CH341 is not set
 +# CONFIG_USB_SERIAL_WHITEHEAT is not set
 +# CONFIG_USB_SERIAL_DIGI_ACCELEPORT is not set
-+# CONFIG_USB_SERIAL_CP210X is not set
++CONFIG_USB_SERIAL_CP210X=m
 +# CONFIG_USB_SERIAL_CYPRESS_M8 is not set
 +# CONFIG_USB_SERIAL_EMPEG is not set
 +# CONFIG_USB_SERIAL_FTDI_SIO is not set
@@ -4355,7 +4358,11 @@ index 0000000..b1ed708
 +# CONFIG_NFS_V4_1 is not set
 +# CONFIG_NFS_USE_LEGACY_DNS is not set
 +CONFIG_NFS_USE_KERNEL_DNS=y
-+# CONFIG_NFSD is not set
++CONFIG_NFSD=y
++CONFIG_NFSD_V2_ACL=y
++CONFIG_NFSD_V3=y
++CONFIG_NFSD_V3_ACL=y
++# CONFIG_NFSD_V4 is not set
 +CONFIG_LOCKD=y
 +CONFIG_LOCKD_V4=y
 +CONFIG_NFS_ACL_SUPPORT=y
@@ -10872,37 +10879,6 @@ index 0000000..fed2b1b
 +#define BYT_FW_MOD_TABLE_SIZE   0x100
 +
 +#endif
-diff --git a/arch/x86/include/asm/platform_mrfld_audio.h b/arch/x86/include/asm/platform_mrfld_audio.h
-new file mode 100644
-index 0000000..e2b1749
---- /dev/null
-+++ b/arch/x86/include/asm/platform_mrfld_audio.h
-@@ -0,0 +1,25 @@
-+/*
-+ * platform_mrfld_audio.h: MRFLD audio platform data header file
-+ *
-+ * (C) Copyright 2012 Intel Corporation
-+ * Author: Vinod Koul <vinod.koul@intel.com>
-+ *
-+ * This program is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU General Public License
-+ * as published by the Free Software Foundation; version 2
-+ * of the License.
-+ */
-+#ifndef _PLATFORM_MRFLD_AUDIO_H_
-+#define _PLATFORM_MRFLD_AUDIO_H_
-+
-+#include <linux/sfi.h>
-+
-+struct mrfld_audio_platform_data {
-+	const struct soft_platform_id *spid;
-+	int codec_gpio;
-+	int codec_rst;
-+};
-+
-+extern void __init *merfld_audio_platform_data(void *info) __attribute__((weak));
-+extern void __init *merfld_wm8958_audio_platform_data(void *info) __attribute__((weak));
-+#endif
 diff --git a/arch/x86/include/asm/platform_sst.h b/arch/x86/include/asm/platform_sst.h
 new file mode 100644
 index 0000000..e752ed9
@@ -11918,10 +11894,10 @@ index 0000000..57886ea
 +obj-$(CONFIG_INTEL_DEBUG_FEATURE) += intel_soc_debug.o
 diff --git a/arch/x86/platform/intel-mid/board.c b/arch/x86/platform/intel-mid/board.c
 new file mode 100644
-index 0000000..0f856fa
+index 0000000..eb3d8a4
 --- /dev/null
 +++ b/arch/x86/platform/intel-mid/board.c
-@@ -0,0 +1,166 @@
+@@ -0,0 +1,165 @@
 +/*
 + * board-blackbay.c: Intel Medfield based board (Blackbay)
 + *
@@ -11984,7 +11960,7 @@ index 0000000..0f856fa
 +#include "device_libs/platform_soc_thermal.h"
 +#include "device_libs/platform_msic_adc.h"
 +#include "device_libs/platform_bcove_adc.h"
-+#include <asm/platform_mrfld_audio.h>
++#include "device_libs/platform_mrfld_audio.h"
 +#include "device_libs/platform_mrfl_thermal.h"
 +
 +/*
@@ -12081,11 +12057,10 @@ index 0000000..0f856fa
 +						&ipc_device_handler},
 +	{"i2c_pmic_adap", SFI_DEV_TYPE_IPC, 1, &mrfl_pmic_i2c_platform_data,
 +						&ipc_device_handler},
-+	{"mrfld_wm8958", SFI_DEV_TYPE_IPC, 1, &merfld_wm8958_audio_platform_data,
++	{"mrfld_sst", SFI_DEV_TYPE_IPC, 1, &mrfld_sst_audio_platform_data,
 +						&ipc_device_handler},
 +	{"soc_thrm", SFI_DEV_TYPE_IPC, 1, &no_platform_data,
 +						&soc_thrm_device_handler},
-+	{"wm8958", SFI_DEV_TYPE_I2C, 0, &wm8994_platform_data, NULL},
 +	{},
 +};
 diff --git a/arch/x86/platform/intel-mid/device_libs/Makefile b/arch/x86/platform/intel-mid/device_libs/Makefile
@@ -15472,10 +15447,10 @@ index 0000000..f1011a1
 +#endif
 diff --git a/arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.c b/arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.c
 new file mode 100644
-index 0000000..b37818e
+index 0000000..0e8738b
 --- /dev/null
 +++ b/arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.c
-@@ -0,0 +1,130 @@
+@@ -0,0 +1,151 @@
 +/*
 + * platform_mrfld_audio.c: MRFLD audio platform data initilization file
 + *
@@ -15490,6 +15465,8 @@ index 0000000..b37818e
 + */
 +
 +#include <linux/kernel.h>
++#include <linux/module.h>
++#include <linux/moduleparam.h>
 +#include <linux/interrupt.h>
 +#include <linux/scatterlist.h>
 +#include <linux/init.h>
@@ -15498,8 +15475,13 @@ index 0000000..b37818e
 +#include <asm/intel-mid.h>
 +#include <linux/platform_data/intel_mid_remoteproc.h>
 +#include <asm/platform_sst_audio.h>
-+#include <asm/platform_mrfld_audio.h>
++#include "platform_mrfld_audio.h"
 +#include "platform_msic.h"
++#include "platform_wm8994.h"
++
++static char* audio_codec = "dummy";
++module_param(audio_codec, charp, S_IRUSR);
++MODULE_PARM_DESC(audio_codec, "Hardware codec's name in use");
 +
 +static struct mrfld_audio_platform_data mrfld_audio_pdata;
 +
@@ -15558,7 +15540,7 @@ index 0000000..b37818e
 +	return NULL;
 +}
 +
-+void *merfld_wm8958_audio_platform_data(void *info)
++void *mrfld_sst_audio_platform_data(void *info)
 +{
 +	struct platform_device *pdev;
 +	int ret;
@@ -15569,43 +15551,88 @@ index 0000000..b37818e
 +		return NULL;
 +	}
 +
-+	pdev = platform_device_alloc("hdmi-audio", -1);
-+	if (!pdev) {
-+		pr_err("failed to allocate hdmi-audio platform device\n");
-+		return NULL;
-+	}
++	if(!audio_codec || !strcmp(audio_codec, "dummy")) {
++		pdev = platform_device_register_simple("merr_dpcm_dummy",
++					0, NULL, 0);
++		if (!pdev) {
++			pr_err("failed to register merr_dpcm_dummy platform device\n");
++			return NULL;
++		}
++	} else if (!strcmp(audio_codec, "wm8958")) {
++		/* Register i2c audio codec wm8958 */
++		wm8958_platform_data(NULL);
 +
-+	ret = platform_device_add(pdev);
-+	if (ret) {
-+		pr_err("failed to add hdmi-audio platform device\n");
-+		platform_device_put(pdev);
-+		return NULL;
-+	}
++		pdev = platform_device_alloc("mrfld_wm8958", -1);
++		if (!pdev) {
++			pr_err("failed to allocate mrfld_wm8958 platform device\n");
++			return NULL;
++		}
 +
-+	pdev = platform_device_alloc("mrfld_wm8958", -1);
-+	if (!pdev) {
-+		pr_err("failed to allocate mrfld_wm8958 platform device\n");
-+		return NULL;
-+	}
++		ret = platform_device_add(pdev);
++		if (ret) {
++			pr_err("failed to add mrfld_wm8958 platform device\n");
++			platform_device_put(pdev);
++			return NULL;
++		}
++		if (platform_device_add_data(pdev, &mrfld_audio_pdata,
++						 sizeof(mrfld_audio_pdata))) {
++			pr_err("failed to add mrfld_wm8958 platform data\n");
++			platform_device_put(pdev);
++			return NULL;
++		}
 +
-+	ret = platform_device_add(pdev);
-+	if (ret) {
-+		pr_err("failed to add mrfld_wm8958 platform device\n");
-+		platform_device_put(pdev);
-+		return NULL;
++		register_rpmsg_service("rpmsg_mrfld_wm8958_audio", RPROC_SCU,
++					RP_MSIC_MRFLD_AUDIO);
 +	}
-+	if (platform_device_add_data(pdev, &mrfld_audio_pdata,
-+				     sizeof(mrfld_audio_pdata))) {
-+		pr_err("failed to add mrfld_wm8958 platform data\n");
-+		platform_device_put(pdev);
-+		return NULL;
-+	}
++	/*
++	 * To add a new codec, add a "else if" statement with
++	 * its name and its specific implementation.
++	 */
++	else {
++		pr_info("Codec %s is not implemented."
++				"Dummy codec selected...\n", audio_codec);
 +
-+	register_rpmsg_service("rpmsg_mrfld_wm8958_audio", RPROC_SCU,
-+				RP_MSIC_MRFLD_AUDIO);
++		pdev = platform_device_register_simple("merr_dpcm_dummy",
++							0, NULL, 0);
++		if (!pdev) {
++			pr_err("failed to register merr_dpcm_dummy platform device\n");
++			return NULL;
++		}
++	}
 +
 +	return NULL;
 +}
+diff --git a/arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.h b/arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.h
+new file mode 100644
+index 0000000..2a57556
+--- /dev/null
++++ b/arch/x86/platform/intel-mid/device_libs/platform_mrfld_audio.h
+@@ -0,0 +1,25 @@
++/*
++ * platform_mrfld_audio.h: MRFLD audio platform data header file
++ *
++ * (C) Copyright 2012 Intel Corporation
++ * Author: Vinod Koul <vinod.koul@intel.com>
++ *
++ * This program is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU General Public License
++ * as published by the Free Software Foundation; version 2
++ * of the License.
++ */
++#ifndef _PLATFORM_MRFLD_AUDIO_H_
++#define _PLATFORM_MRFLD_AUDIO_H_
++
++#include <linux/sfi.h>
++
++struct mrfld_audio_platform_data {
++	const struct soft_platform_id *spid;
++	int codec_gpio;
++	int codec_rst;
++};
++
++extern void __init *merfld_audio_platform_data(void *info) __attribute__((weak));
++extern void __init *mrfld_sst_audio_platform_data(void *info) __attribute__((weak));
++#endif
 diff --git a/arch/x86/platform/intel-mid/device_libs/platform_msic.c b/arch/x86/platform/intel-mid/device_libs/platform_msic.c
 new file mode 100644
 index 0000000..a601f2c
@@ -18102,10 +18129,10 @@ index 0000000..909f697
 +#endif
 diff --git a/arch/x86/platform/intel-mid/device_libs/platform_wm8994.c b/arch/x86/platform/intel-mid/device_libs/platform_wm8994.c
 new file mode 100644
-index 0000000..82ada45
+index 0000000..51a6352
 --- /dev/null
 +++ b/arch/x86/platform/intel-mid/device_libs/platform_wm8994.c
-@@ -0,0 +1,221 @@
+@@ -0,0 +1,243 @@
 +/*
 + * platform_wm8994.c: wm8994 platform data initilization file
 + *
@@ -18327,16 +18354,39 @@ index 0000000..82ada45
 +
 +	return &wm8994_pdata;
 +}
++
++static struct i2c_board_info wm8958_info = {
++	I2C_BOARD_INFO("wm8958", 0x1a),
++};
++
++void __init *wm8958_platform_data(void *info)
++{
++	int irq = 0, bus_num = 1;
++
++	platform_add_devices(wm8958_reg_devices,
++			ARRAY_SIZE(wm8958_reg_devices));
++
++	irq = wm8994_get_irq_data(&wm8994_pdata, &wm8958_info,
++					"audiocodec_int");
++
++	if (irq)
++		wm8958_info.platform_data = &wm8994_pdata;
++
++	i2c_register_board_info(bus_num, &wm8958_info, 1);
++
++	return;
++}
 diff --git a/arch/x86/platform/intel-mid/device_libs/platform_wm8994.h b/arch/x86/platform/intel-mid/device_libs/platform_wm8994.h
 new file mode 100644
-index 0000000..5abead7
+index 0000000..ac3b2b6
 --- /dev/null
 +++ b/arch/x86/platform/intel-mid/device_libs/platform_wm8994.h
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,6 @@
 +#ifndef _PLATFORM_WM8994_H_
 +#define _PLATFORM_WM8994_H_
 +
 +extern void *wm8994_platform_data(void *info) __attribute__((weak));
++extern void *wm8958_platform_data(void *info) __attribute__((weak));
 +#endif
 diff --git a/arch/x86/platform/intel-mid/early_printk_intel_mid.c b/arch/x86/platform/intel-mid/early_printk_intel_mid.c
 new file mode 100644
@@ -35214,7 +35264,7 @@ index 0cb2d65..2ecb796 100644
  # Device drivers. Generally keep list sorted alphabetically
  obj-$(CONFIG_GPIO_GENERIC)	+= gpio-generic.o
 diff --git a/drivers/gpio/gpio-langwell.c b/drivers/gpio/gpio-langwell.c
-index 62ef10a..f8b907d 100644
+index 62ef10a..2c44199 100644
 --- a/drivers/gpio/gpio-langwell.c
 +++ b/drivers/gpio/gpio-langwell.c
 @@ -1,7 +1,5 @@
@@ -35565,7 +35615,29 @@ index 62ef10a..f8b907d 100644
  static void __iomem *gpio_reg_2bit(struct gpio_chip *chip, unsigned offset,
  				   enum GPIO_REG reg_type)
  {
-@@ -117,10 +411,50 @@ static int lnw_gpio_get(struct gpio_chip *chip, unsigned offset)
+@@ -99,9 +393,18 @@ static void __iomem *gpio_reg_2bit(struct gpio_chip *chip, unsigned offset,
+ 
+ static int lnw_gpio_request(struct gpio_chip *chip, unsigned offset)
+ {
+-	void __iomem *gafr = gpio_reg_2bit(chip, offset, GAFR);
+-	u32 value = readl(gafr);
+-	int shift = (offset % 16) << 1, af = (value >> shift) & 3;
++	struct lnw_gpio *lnw = to_lnw_priv(chip);
++	u32 value;
++	void __iomem *gafr;
++	int shift, af;
++
++	if (lnw->type > CLOVERVIEW_GPIO_CORE)
++		return 0;
++
++	gafr = gpio_reg_2bit(chip, offset, GAFR);
++	value = readl(gafr);
++	shift = (offset % 16) << 1;
++	af = (value >> shift) & 3;
+ 
+ 	if (af) {
+ 		value &= ~(3 << shift);
+@@ -117,10 +420,50 @@ static int lnw_gpio_get(struct gpio_chip *chip, unsigned offset)
  	return readl(gplr) & BIT(offset % 32);
  }
  
@@ -35616,7 +35688,7 @@ index 62ef10a..f8b907d 100644
  	if (value) {
  		gpsr = gpio_reg(chip, offset, GPSR);
  		writel(BIT(offset % 32), gpsr);
-@@ -188,8 +522,10 @@ static int lnw_irq_type(struct irq_data *d, unsigned type)
+@@ -188,8 +531,10 @@ static int lnw_irq_type(struct irq_data *d, unsigned type)
  	u32 gpio = irqd_to_hwirq(d);
  	unsigned long flags;
  	u32 value;
@@ -35627,7 +35699,7 @@ index 62ef10a..f8b907d 100644
  
  	if (gpio >= lnw->chip.ngpio)
  		return -EINVAL;
-@@ -197,47 +533,217 @@ static int lnw_irq_type(struct irq_data *d, unsigned type)
+@@ -197,47 +542,217 @@ static int lnw_irq_type(struct irq_data *d, unsigned type)
  	if (lnw->pdev)
  		pm_runtime_get(&lnw->pdev->dev);
  
@@ -35801,13 +35873,13 @@ index 62ef10a..f8b907d 100644
 +	default:
 +		break;
 +	}
-+}
-+
+ }
+ 
 +static int lwn_irq_set_wake(struct irq_data *d, unsigned on)
 +{
 +	return 0;
- }
- 
++}
++
 +static void lnw_irq_ack(struct irq_data *d)
 +{
 +}
@@ -35862,7 +35934,7 @@ index 62ef10a..f8b907d 100644
  	{ 0, }
  };
  MODULE_DEVICE_TABLE(pci, lnw_gpio_ids);
-@@ -245,28 +751,446 @@ MODULE_DEVICE_TABLE(pci, lnw_gpio_ids);
+@@ -245,28 +760,446 @@ MODULE_DEVICE_TABLE(pci, lnw_gpio_ids);
  static void lnw_irq_handler(unsigned irq, struct irq_desc *desc)
  {
  	struct irq_data *data = irq_desc_get_irq_data(desc);
@@ -36316,7 +36388,7 @@ index 62ef10a..f8b907d 100644
  static void lnw_irq_init_hw(struct lnw_gpio *lnw)
  {
  	void __iomem *reg;
-@@ -303,6 +1227,16 @@ static const struct irq_domain_ops lnw_gpio_irq_ops = {
+@@ -303,6 +1236,16 @@ static const struct irq_domain_ops lnw_gpio_irq_ops = {
  	.xlate = irq_domain_xlate_twocell,
  };
  
@@ -36333,7 +36405,7 @@ index 62ef10a..f8b907d 100644
  static int lnw_gpio_runtime_idle(struct device *dev)
  {
  	int err = pm_schedule_suspend(dev, 500);
-@@ -314,7 +1248,9 @@ static int lnw_gpio_runtime_idle(struct device *dev)
+@@ -314,7 +1257,9 @@ static int lnw_gpio_runtime_idle(struct device *dev)
  }
  
  static const struct dev_pm_ops lnw_gpio_pm_ops = {
@@ -36344,7 +36416,7 @@ index 62ef10a..f8b907d 100644
  };
  
  static int lnw_gpio_probe(struct pci_dev *pdev,
-@@ -323,10 +1259,15 @@ static int lnw_gpio_probe(struct pci_dev *pdev,
+@@ -323,10 +1268,15 @@ static int lnw_gpio_probe(struct pci_dev *pdev,
  	void *base;
  	resource_size_t start, len;
  	struct lnw_gpio *lnw;
@@ -36361,7 +36433,7 @@ index 62ef10a..f8b907d 100644
  
  	retval = pci_enable_device(pdev);
  	if (retval)
-@@ -367,20 +1308,29 @@ static int lnw_gpio_probe(struct pci_dev *pdev,
+@@ -367,20 +1317,29 @@ static int lnw_gpio_probe(struct pci_dev *pdev,
  		goto err_ioremap;
  	}
  
@@ -36394,7 +36466,7 @@ index 62ef10a..f8b907d 100644
  					    &lnw_gpio_irq_ops, lnw);
  	if (!lnw->domain) {
  		retval = -ENOMEM;
-@@ -395,15 +1345,40 @@ static int lnw_gpio_probe(struct pci_dev *pdev,
+@@ -395,15 +1354,40 @@ static int lnw_gpio_probe(struct pci_dev *pdev,
  	}
  
  	lnw_irq_init_hw(lnw);
@@ -36438,7 +36510,7 @@ index 62ef10a..f8b907d 100644
  	return 0;
  
  err_ioremap:
-@@ -506,4 +1481,4 @@ static int __init lnw_gpio_init(void)
+@@ -506,4 +1490,4 @@ static int __init lnw_gpio_init(void)
  	return ret;
  }
  
@@ -70376,10 +70448,10 @@ index 33f9c09..1ab0e90 100644
  obj-$(CONFIG_SPI_MPC52xx_PSC)		+= spi-mpc52xx-psc.o
 diff --git a/drivers/spi/intel_mid_ssp_spi.c b/drivers/spi/intel_mid_ssp_spi.c
 new file mode 100644
-index 0000000..d790620
+index 0000000..b68b1eb
 --- /dev/null
 +++ b/drivers/spi/intel_mid_ssp_spi.c
-@@ -0,0 +1,1787 @@
+@@ -0,0 +1,1775 @@
 +/*
 + * intel_mid_ssp_spi.c
 + * This driver supports Bulverde SSP core used on Intel MID platforms
@@ -71175,38 +71247,22 @@ index 0000000..d790620
 +	return IRQ_HANDLED;
 +}
 +
++static void poll_writer(struct work_struct *work)
++{
++	struct ssp_drv_context *sspc =
++		container_of(work, struct ssp_drv_context, poll_write);
++
++	while (sspc->tx < sspc->tx_end)
++		sspc->write(sspc);
++
++}
++
 +/*
 + * Perform a single transfer.
 + */
 +static void poll_transfer(unsigned long data)
 +{
 +	struct ssp_drv_context *sspc = (void *)data;
-+
-+	bool delay = false;
-+
-+	if ((intel_mid_identify_sim() == INTEL_MID_CPU_SIMULATION_VP) ||
-+	     intel_mid_identify_sim() == INTEL_MID_CPU_SIMULATION_HVP) {
-+		delay = true;
-+	}
-+
-+	while (sspc->tx < sspc->tx_end) {
-+		/* [REVERT ME] Tangier simulator requires a delay */
-+		if (delay)
-+			udelay(10);
-+		if (ssp_timing_wr) {
-+			int timeout = 100;
-+			/* It is used as debug UART on Tangier. Since
-+			   baud rate = 115200, it needs at least 312us
-+			   for one word transferring. Becuase of silicon
-+			   issue, it MUST check SFIFOL here instead of
-+			   TNF. It is the workaround for A0 stepping*/
-+			while (--timeout &&
-+					((read_SFIFOL(sspc->ioaddr)) & 0xFFFF))
-+				udelay(10);
-+		}
-+		sspc->write(sspc);
-+		sspc->read(sspc);
-+	}
 +
 +	while (!sspc->read(sspc))
 +		cpu_relax();
@@ -71553,6 +71609,7 @@ index 0000000..d790620
 +			dma_transfer(sspc);
 +		} else {
 +			/* Do the transfer syncronously */
++			queue_work(sspc->wq_poll_write, &sspc->poll_write);
 +			poll_transfer((unsigned long)sspc);
 +		}
 +
@@ -71952,6 +72009,9 @@ index 0000000..d790620
 +	spin_lock_init(&sspc->lock);
 +	INIT_WORK(&sspc->pump_messages, pump_messages);
 +	sspc->workqueue = create_singlethread_workqueue(dev_name(&pdev->dev));
++
++	INIT_WORK(&sspc->poll_write, poll_writer);
++	sspc->wq_poll_write = create_singlethread_workqueue("spi_poll_wr");
 +
 +	/* Register with the SPI framework */
 +	dev_info(dev, "register with SPI framework (bus spi%d)\n",
@@ -91429,6 +91489,20 @@ index 6e70ce9..37003c8 100644
 +#endif
  	platform_driver_unregister(&usb_xhci_driver);
  }
+diff --git a/drivers/usb/host/xhci.c b/drivers/usb/host/xhci.c
+index 4a5251f..04de933 100644
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -317,6 +317,9 @@ static void xhci_cleanup_msix(struct xhci_hcd *xhci)
+ 
+ 	xhci_free_irq(xhci);
+ 
++	if (xhci->quirks & XHCI_PLAT)
++		return;
++
+ 	if (xhci->msix_entries) {
+ 		pci_disable_msix(pdev);
+ 		kfree(xhci->msix_entries);
 diff --git a/drivers/usb/phy/penwell_otg.c b/drivers/usb/phy/penwell_otg.c
 new file mode 100644
 index 0000000..14b7d42
@@ -101506,10 +101580,10 @@ index fe81791..cd50488 100644
  	u16	addr;
 diff --git a/include/linux/spi/intel_mid_ssp_spi.h b/include/linux/spi/intel_mid_ssp_spi.h
 new file mode 100644
-index 0000000..2eed919
+index 0000000..b212eee
 --- /dev/null
 +++ b/include/linux/spi/intel_mid_ssp_spi.h
-@@ -0,0 +1,352 @@
+@@ -0,0 +1,354 @@
 +/*
 + *  Copyright (C) Intel 2009
 + *  Ken Mills <ken.k.mills@intel.com>
@@ -101769,7 +101843,9 @@ index 0000000..2eed919
 +
 +	spinlock_t lock;
 +	struct workqueue_struct *workqueue;
++	struct workqueue_struct *wq_poll_write;
 +	struct work_struct pump_messages;
++	struct work_struct poll_write;
 +	struct list_head queue;
 +	struct completion msg_done;
 +
@@ -104059,6 +104135,53 @@ index 36fed40..d0ff076 100644
  	}
  
  	return 0;
+diff --git a/net/ipv4/inet_fragment.c b/net/ipv4/inet_fragment.c
+index 7e06641..f7f8af9 100644
+--- a/net/ipv4/inet_fragment.c
++++ b/net/ipv4/inet_fragment.c
+@@ -283,9 +283,10 @@ static struct inet_frag_queue *inet_frag_intern(struct netns_frags *nf,
+ 
+ 	atomic_inc(&qp->refcnt);
+ 	hlist_add_head(&qp->list, &hb->chain);
++	inet_frag_lru_add(nf, qp);
+ 	spin_unlock(&hb->chain_lock);
+ 	read_unlock(&f->lock);
+-	inet_frag_lru_add(nf, qp);
++
+ 	return qp;
+ }
+ 
+diff --git a/net/netfilter/nf_conntrack_proto_dccp.c b/net/netfilter/nf_conntrack_proto_dccp.c
+index a99b6c3..59359be 100644
+--- a/net/netfilter/nf_conntrack_proto_dccp.c
++++ b/net/netfilter/nf_conntrack_proto_dccp.c
+@@ -428,7 +428,7 @@ static bool dccp_new(struct nf_conn *ct, const struct sk_buff *skb,
+ 	const char *msg;
+ 	u_int8_t state;
+ 
+-	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &dh);
++	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
+ 	BUG_ON(dh == NULL);
+ 
+ 	state = dccp_state_table[CT_DCCP_ROLE_CLIENT][dh->dccph_type][CT_DCCP_NONE];
+@@ -486,7 +486,7 @@ static int dccp_packet(struct nf_conn *ct, const struct sk_buff *skb,
+ 	u_int8_t type, old_state, new_state;
+ 	enum ct_dccp_roles role;
+ 
+-	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &dh);
++	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
+ 	BUG_ON(dh == NULL);
+ 	type = dh->dccph_type;
+ 
+@@ -577,7 +577,7 @@ static int dccp_error(struct net *net, struct nf_conn *tmpl,
+ 	unsigned int cscov;
+ 	const char *msg;
+ 
+-	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &dh);
++	dh = skb_header_pointer(skb, dataoff, sizeof(_dh), &_dh);
+ 	if (dh == NULL) {
+ 		msg = "nf_ct_dccp: short packet ";
+ 		goto out_invalid;
 diff --git a/sound/core/Kconfig b/sound/core/Kconfig
 index b413ed0..27a27bd 100644
 --- a/sound/core/Kconfig
@@ -105893,10 +106016,10 @@ index 0000000..3581ae1
 +endif
 diff --git a/sound/soc/intel/board/merr_dpcm_dummy.c b/sound/soc/intel/board/merr_dpcm_dummy.c
 new file mode 100644
-index 0000000..3cb879c
+index 0000000..5603b21
 --- /dev/null
 +++ b/sound/soc/intel/board/merr_dpcm_dummy.c
-@@ -0,0 +1,233 @@
+@@ -0,0 +1,201 @@
 +/*
 + *  ASoc Dummy DPCM Machine driver for Intel Edison MID platform
 + *
@@ -105927,10 +106050,6 @@ index 0000000..3cb879c
 +#include <asm/intel_sst_mrfld.h>
 +#include <sound/soc.h>
 +#include <sound/pcm_params.h>
-+
-+static bool wm_hardware_avail = true;
-+module_param(wm_hardware_avail, bool, S_IRUSR);
-+MODULE_PARM_DESC(wm_hardware_avail, "1 in cmdline to use dummy version");
 +
 +#ifdef CONFIG_PM_SLEEP
 +static int snd_merr_dpcm_prepare(struct device *dev)
@@ -106095,35 +106214,7 @@ index 0000000..3cb879c
 +	.remove = snd_merr_dpcm_remove,
 +};
 +
-+static int __init snd_merr_dpcm_dummy_init(void)
-+{
-+	int err;
-+	struct platform_device *device;
-+
-+	/* Check from cmdline if hardware is plugged to the board */
-+	if (wm_hardware_avail) {
-+		pr_info("dpcm dummy is not supported according to cmdline");
-+		return -EINVAL;
-+	}
-+
-+	err = platform_driver_register(&snd_merr_dpcm_drv);
-+	if (err < 0)
-+		return err;
-+
-+	device = platform_device_register_simple("merr_dpcm_dummy",
-+			0, NULL, 0);
-+	if (IS_ERR(device))
-+		return -ENODEV;
-+
-+	return 0;
-+}
-+late_initcall(snd_merr_dpcm_dummy_init);
-+
-+static void __exit snd_merr_dpcm_dummy_exit(void)
-+{
-+	return platform_driver_unregister(&snd_merr_dpcm_drv);
-+}
-+module_exit(snd_merr_dpcm_dummy_exit);
++module_platform_driver(snd_merr_dpcm_drv);
 +
 +MODULE_DESCRIPTION("ASoC Intel(R) Edison dummy MID Machine driver");
 +MODULE_AUTHOR("Michael Soares <michaelx.soares@intel.com>");
@@ -106132,10 +106223,10 @@ index 0000000..3cb879c
 +
 diff --git a/sound/soc/intel/board/merr_dpcm_wm8958.c b/sound/soc/intel/board/merr_dpcm_wm8958.c
 new file mode 100644
-index 0000000..9d3aba8
+index 0000000..3b89a82
 --- /dev/null
 +++ b/sound/soc/intel/board/merr_dpcm_wm8958.c
-@@ -0,0 +1,932 @@
+@@ -0,0 +1,931 @@
 +/*
 + *  merr_dpcm_wm8958.c - ASoc DPCM Machine driver for Intel Merrfield MID platform
 + *
@@ -106170,7 +106261,6 @@ index 0000000..9d3aba8
 +#include <linux/gpio.h>
 +#include <asm/intel_scu_pmic.h>
 +#include <asm/intel_mid_rpmsg.h>
-+#include <asm/platform_mrfld_audio.h>
 +#include <asm/intel_sst_mrfld.h>
 +#include <sound/pcm.h>
 +#include <sound/pcm_params.h>
@@ -122712,10 +122802,10 @@ index 0000000..8250ccb
 +}
 diff --git a/sound/soc/intel/sst/sst_dsp.c b/sound/soc/intel/sst/sst_dsp.c
 new file mode 100644
-index 0000000..edfe471
+index 0000000..29950f9
 --- /dev/null
 +++ b/sound/soc/intel/sst/sst_dsp.c
-@@ -0,0 +1,1995 @@
+@@ -0,0 +1,1992 @@
 +/*
 + *  sst_dsp.c - Intel SST Driver for audio engine
 + *
@@ -122768,13 +122858,10 @@ index 0000000..edfe471
 +#define MEMCPY_TOIO memcpy32_toio
 +#endif
 +
-+static struct sst_module_info sst_modules_mrfld[] = {
-+	{"mp3_dec", SST_CODEC_TYPE_MP3, 0, SST_LIB_NOT_FOUND},
-+	{"aac_dec", SST_CODEC_TYPE_AAC, 0, SST_LIB_NOT_FOUND},
-+	{"audclass_lib", SST_ALGO_AUDCLASSIFIER, 0, SST_LIB_NOT_FOUND},
-+	{"vtsv_lib", SST_ALGO_VTSV, 0, SST_LIB_NOT_FOUND},
-+	{"geq_lib", SST_ALGO_GEQ, 0, SST_LIB_NOT_FOUND},
-+};
++/**
++ * Add here all the static librairies to be downloaded at bootup
++ */
++static struct sst_module_info sst_modules_mrfld[] = {};
 +
 +static struct sst_module_info sst_modules_byt[] = {
 +	{"mp3_dec", SST_CODEC_TYPE_MP3, 0, SST_LIB_NOT_FOUND},
