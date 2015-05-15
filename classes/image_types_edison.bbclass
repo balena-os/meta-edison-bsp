@@ -18,6 +18,11 @@ IMAGE_CMD_boot () {
 		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/bzImage-initramfs-edison.bin ::/vmlinuzi
 	fi
 
+	# Copy fota initramfs
+	if [ -e ${DEPLOY_DIR_IMAGE}/core-image-initramfs-edison.cpio.gz ]; then
+		mcopy -i ${WORKDIR}/boot.img -s ${DEPLOY_DIR_IMAGE}/core-image-initramfs-edison.cpio.gz ::/initramfs
+	fi
+
 	install ${WORKDIR}/boot.img ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.hddimg
 	ln -s ${IMAGE_NAME}.hddimg ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.hddimg
 }
