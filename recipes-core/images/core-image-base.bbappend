@@ -1,4 +1,5 @@
 IMAGE_INSTALL += " \
+	bluez5 \
 	links \
 	"
 
