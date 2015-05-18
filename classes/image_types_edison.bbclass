@@ -27,8 +27,42 @@ IMAGE_CMD_boot () {
 	ln -s ${IMAGE_NAME}.hddimg ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.hddimg
 }
 
+IMAGE_DEPENDS_update = "dosfstools-native mtools-native"
+IMAGE_TYPEDEP_update = "tar.bz2"
+
+IMAGE_CMD_update () {
+
+	UPDATE_BLOCKS=786432
+	FAT_BLOCKS=785408
+
+	rm -f ${WORKDIR}/update.img
+	rm -f ${WORKDIR}/fat.img
+
+	# create disk image with fat32 primary partition on all available space
+	dd if=/dev/zero of=${WORKDIR}/update.img bs=1024 count=$UPDATE_BLOCKS
+	echo -ne "n\np\n1\n\n\nt\nb\np\nw\n" | fdisk ${WORKDIR}/update.img
+
+	# Create fat file system image
+	mkfs.vfat -n "Edison" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
+
+	# Create recovery directory and populate it
+	mmd -i ${WORKDIR}/fat.img ::/recovery
+	echo ${IMAGE_NAME} > /tmp/image-name.txt
+	mcopy -i ${WORKDIR}/fat.img -s /tmp/image-name.txt ::/recovery/image-name.txt	
+	mcopy -i ${WORKDIR}/fat.img -s ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.tar.bz2 ::/recovery/rootfs.tar.bz2
+	mcopy -i ${WORKDIR}/fat.img -s ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.hddimg ::/recovery/boot.hddimg
+	mcopy -i ${WORKDIR}/fat.img -s ${DEPLOY_DIR_IMAGE}/u-boot-edison.bin ::/recovery/u-boot.bin
+	mcopy -i ${WORKDIR}/fat.img -s ${DEPLOY_DIR_IMAGE}/u-boot-envs/edison-blankrndis.bin ::/recovery/u-boot.env
+
+	# add fat image to disk image
+	dd if=${WORKDIR}/fat.img of=${WORKDIR}/update.img bs=1024 seek=1024
+
+	install ${WORKDIR}/update.img ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.update.hddimg
+	ln -s ${IMAGE_NAME}.update.hddimg ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.update.hddimg
+}
+
 IMAGE_DEPENDS_toflash = "ifwi flashall u-boot u-boot-mkimage-native"
-IMAGE_TYPEDEP_toflash = "ext4 boot"
+IMAGE_TYPEDEP_toflash = "ext4 boot update"
 
 IMAGE_CMD_toflash () {
 
@@ -37,6 +71,7 @@ IMAGE_CMD_toflash () {
 
 	install ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext4	${WORKDIR}/toFlash/edison-image-edison.ext4
 	install ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.hddimg	${WORKDIR}/toFlash/edison-image-edison.hddimg
+	install ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.update.hddimg	${WORKDIR}/toFlash/edison-image-edison.update.hddimg
 
 	install ${DEPLOY_DIR_IMAGE}/u-boot-edison.bin		${WORKDIR}/toFlash/
 	install ${DEPLOY_DIR_IMAGE}/u-boot-edison.img		${WORKDIR}/toFlash/
