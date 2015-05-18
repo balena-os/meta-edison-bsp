@@ -54,6 +54,15 @@
              "tool" : "dfuDownloader"
             },
             {
+             "args" : "\"--alt\" \"update\" \"-D\" \"${update_file}\" \"-t\" \"4096\"",
+             "description" : "Flashing update partition",
+             "mandatory" : true,
+             "restrict" : null,
+             "retry" : 2,
+             "timeout" : 1200000,
+             "tool" : "dfuDownloader"
+            },
+            {
              "args" : "\"--alt\" \"rootfs\" \"-D\" \"${rootfs_file}\" \"-t\" \"4096\" -R",
              "description" : "Flashing rootfs",
              "mandatory" : true,
@@ -142,6 +151,12 @@
     "name" : "U-Boot primary",
     "type" : "file",
     "value" : "u-boot-edison.bin"
+   },
+   "update_file" :    {
+    "description" : "Update",
+    "name" : "Update",
+    "type" : "file",
+    "value" : "edison-image-edison.update.hddimg"
    },
    "vid" :    {
     "description" : "Vendor id",

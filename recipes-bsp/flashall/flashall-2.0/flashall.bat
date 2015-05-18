@@ -139,6 +139,10 @@ echo Flashing boot partition ^(kernel^)
 call:flash-command --alt boot -D "%BASE_DIR%edison-image-edison.hddimg"
 if %errorlevel% neq 0 ( exit /b %errorlevel%)
 
+echo Flashing update partition
+call:flash-command --alt update -D "%BASE_DIR%edison-image-edison.update.hddimg"
+if %errorlevel% neq 0 ( exit /b %errorlevel%)
+
 echo Flashing rootfs, ^(it can take up to 5 minutes... Please be patient^)
 call:flash-command --alt rootfs -D "%BASE_DIR%edison-image-edison.ext4" -R
 if %errorlevel% neq 0 ( exit /b %errorlevel% )
