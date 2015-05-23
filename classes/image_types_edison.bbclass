@@ -81,21 +81,7 @@ IMAGE_CMD_toflash () {
 
 	install ${DEPLOY_DIR_IMAGE}/flashall/filter-dfu-out.js		${WORKDIR}/toFlash/
 	install ${DEPLOY_DIR_IMAGE}/flashall/flashall.*			${WORKDIR}/toFlash/
-	install ${DEPLOY_DIR_IMAGE}/flashall/ota_update.cmd		${WORKDIR}/toFlash/
 	install ${DEPLOY_DIR_IMAGE}/flashall/FlashEdison.json		${WORKDIR}/toFlash/
-
-	# Preprocess OTA script
-	# Compute sha1sum of each file under toFlash and build an array containing
-	# @@sha1_filename:SHA1VALUE
-	pth_out=${WORKDIR}/toFlash/
-	tab_size=$(for fil in $(find $pth_out -maxdepth 1 -type f -printf "%f\n") ; do sha1_hex=$(sha1sum "$pth_out$fil" | cut -c -40); echo "@@sha1_$fil:$sha1_hex" ; done ;)
-
-	# iterate the array and do tag -> value substitution in ota_update.cmd
-	for elem in $tab_size ; do echo "$elem" > /tmp/elem.txt ; IFS=':' read -a fld_elem < /tmp/elem.txt ; sed -i "s/${fld_elem[0]}/${fld_elem[1]}/g" ${WORKDIR}/toFlash/ota_update.cmd; done;
-
-	# Convert OTA script to u-boot script
-	mkimage -a 0x10000 -T script -C none -n 'Edison Updater script' -d ${WORKDIR}/toFlash/ota_update.cmd ${WORKDIR}/toFlash/ota_update.scr
-	rm ${WORKDIR}/toFlash/ota_update.cmd
 
 	# generate a formatted list of all packages included in the image
 	awk '{print $1 " " $3}' ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.manifest > ${WORKDIR}/toFlash/package-list.txt
