@@ -1,0 +1,171 @@
+#! /bin/sh
+
+VERSION=1.0
+RELEASE="edison-x11-dizzy"
+
+MACHINE="edison"
+
+export LC_ALL=C
+
+FEEDURL="http://sandbox.sakoman.com/feeds/$RELEASE/images"
+MOUNT_POINT="/media/edison-sd"
+
+PWD=`pwd`
+WORK_DIR=$PWD
+
+if [ $# -eq 0 ]; then
+	echo ""
+	echo "$0 version $VERSION"
+	echo "Usage: $0 <drive> <image> <release>"
+	echo "   drive: SD device (on edison typically /dev/mmcblk1)"
+	echo "   image: image name (default base)"
+	echo "            minimal"
+	echo "            base"
+	echo "            java"
+	echo "            sdk"
+	echo "            xfce"
+	echo "   release: release name (default current)"
+	echo "            current (most recent build)"
+	echo "            build-timestamp (i.e. 201011182053)"
+	echo "            local (use files in current directory)"
+	echo ""
+	exit 1;
+fi
+
+if ! id | grep -q root; then
+	echo "This utility must be run prefixed with sudo or as root"
+	exit 1;
+fi
+
+DRIVE=$1
+
+if [ "$DRIVE" = "/dev/sda" ] ; then
+	echo "Sorry, /dev/sda probably holds your PC's rootfs.  Please specify a SD device."
+	exit 1;
+fi
+
+if [ "$DRIVE" = "/dev/mmcblk0" ] ; then
+	echo "Sorry, /dev/mmcblk0 holds your Edison's emmc boot code.  You probably meant to use /dev/mmcblk1, the sd card"
+	exit 1;
+fi
+
+if [ -z "$2" ]; then
+	IMAGE="base"
+else
+	IMAGE=$2
+fi
+
+if [ -z "$3" ]; then
+	RELEASE="current"
+else
+	RELEASE=$3
+fi
+
+MACHURL="$FEEDURL/$RELEASE"
+
+#make sure that the SD card isn't mounted before we start
+if [ -b ${DRIVE}1 ]; then
+	umount ${DRIVE}1
+	umount ${DRIVE}2
+elif [ -b ${DRIVE}p1 ]; then
+	umount ${DRIVE}p1
+	umount ${DRIVE}p2
+else
+	umount ${DRIVE}
+fi
+
+SIZE=`fdisk -l $DRIVE | grep Disk | grep bytes | awk '{print $5}'`
+
+echo DISK SIZE – $SIZE bytes
+
+if [ $SIZE -gt 34359738368 ]; then
+	echo "This device is > 32GB and is probably not an SD card!"
+	exit 1;
+fi
+
+CYLINDERS=`echo $SIZE/255/63/512 | bc`
+
+echo CYLINDERS – $CYLINDERS
+
+# wipe current partion setup
+dd if=/dev/zero of=$DRIVE bs=1024 count=1024
+
+# Align partitions for SD card performance/wear optimization
+# FAT partition size is 131072 sectors (64MB) less:
+#	MBR - 1 sector
+#       padding to align to the page size of the underlying flash - 127 sectors
+# so we start the first partition at sector 128 and make it 131072 - 128 = 130944 sectors
+# second partition starts at 131072 and continues to fill the card
+{
+echo 128,130944,0x0C,*
+echo 131072,,,-
+} | sfdisk --force -D -uS -H 255 -S 63 -C $CYLINDERS $DRIVE
+
+sleep 1
+
+if [ -b ${DRIVE}1 ]; then
+	PART1=${DRIVE}1
+	PART2=${DRIVE}2
+elif [ -b ${DRIVE}p1 ]; then
+	PART1=${DRIVE}p1
+	PART2=${DRIVE}p2
+else
+	echo "Improper partitioning on $DRIVE"
+	exit 1;
+fi
+
+echo "Formatting rootfs parition: ${PART2}"
+umount ${PART2}
+mkfs.ext4 -i 4096 -L rootfs ${PART2}
+echo "Finished formatting rootfs partition"
+
+if [ "$RELEASE" = "local" ]; then
+	echo "Using local files"
+else
+	echo "Backing up previously downloaded files (if any)"
+	mv  core-image-$IMAGE-$MACHINE.hddimg core-image-$IMAGE-$MACHINE.hddimg.bak
+	mv  core-image-$IMAGE-$MACHINE.tar.bz2 core-image-$IMAGE-$MACHINE.tar.bz2.bak
+
+	echo "Downloading files from $MACHURL"
+	wget $MACHURL/core-image-$IMAGE-$MACHINE.hddimg
+	wget $MACHURL/core-image-$IMAGE-$MACHINE.tar.bz2
+fi
+
+# create a mount point if it doesn't already exist
+if [ ! -d $MOUNT_POINT ]; then
+	if ! mkdir $MOUNT_POINT; then
+		echo "Could not create mount point: $MOUNT_POINT"
+		echo "SD card creation was not successful"
+		exit 1;
+	fi
+fi
+
+echo "Populating boot partition"
+dd if=core-image-$IMAGE-$MACHINE.hddimg of=${PART1}
+echo "Boot partition complete"
+
+if mount -t ext4 ${PART2} $MOUNT_POINT; then
+	if cd $MOUNT_POINT; then
+		echo "Populating rootfs partition"
+		echo "This will take several minutes . . ."
+		tar xf $WORK_DIR/core-image-$IMAGE-$MACHINE.tar.bz2
+		sync
+		cd $WORK_DIR
+		umount $MOUNT_POINT
+		echo "Rootfs partition complete"
+	else
+		echo "Error populating rootfs partition"
+		echo "SD card creation was not successful"
+	fi
+else
+	echo "Can't mount ${PART2} at $MOUNT_POINT for rootfs creation"
+	echo "SD card creation was not successful"
+	exit 1;
+	
+fi
+
+echo "SD card creation was successful"
+
+exit 0;
+
+
