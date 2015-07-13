@@ -1,4 +1,4 @@
-require ../../../meta/recipes-core/images/core-image-base.bb
+inherit core-image
 
 DESCRIPTION = "Basic image without X support suitable native development. It includes \
 the full meta-toolchain, plus development headers and libraries to form a standalone SDK."
