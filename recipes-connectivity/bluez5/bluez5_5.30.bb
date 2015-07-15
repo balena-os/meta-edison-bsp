@@ -1,7 +1,7 @@
 require recipes-connectivity/bluez5/bluez5.inc
 
-SRC_URI[md5sum] = "37b785185fb98269b45e51b254bd8d3d"
-SRC_URI[sha256sum] = "e870c5fba0bf3496856fc720e2d217856fcf40b59829f8cc0c05902ebb9fb837"
+SRC_URI[md5sum] = "24ba1d1e8e7ef5b8f4033a3059d7600e"
+SRC_URI[sha256sum] = "1e3a4adb5a097dab83b3cf58e09c9541b815c6f33e3da972e18dfd1eb05d382c"
 
 # to get bluetooth.conf
 FILESEXTRAPATHS_prepend := "${THISDIR}/files/:"
