@@ -29,6 +29,9 @@ do_install_append() {
 	if [ -f ${S}/src/main.conf ]; then
 	    install -m 0644 ${S}/src/main.conf ${D}/${sysconfdir}/bluetooth/
 	fi
+	if [ -f ${S}/tools/btmgmt ]; then
+	    install -m 0755 ${S}/tools/btmgmt ${D}${bindir}
+	fi
 	if [ -f ${S}/tools/obexctl ]; then
 	    install -m 0755 ${S}/tools/obexctl ${D}${bindir}
 	fi
