@@ -26,51 +26,51 @@
     "timeout" : 60000,
     "tool" : "dfuDownloader"
    },
-            {
-             "args" : "\"--alt\" \"u-boot-env0\" \"-D\" \"${u-boot-env_file}\" \"-t\" \"4096\"",
-             "description" : "Flashing u-boot-env0",
-             "mandatory" : true,
-             "restrict" : null,
-             "retry" : 2,
-             "timeout" : 60000,
-             "tool" : "dfuDownloader"
-            },
-            {
-             "args" : "\"--alt\" \"u-boot-env1\" \"-D\" \"${u-boot-env_file}\" \"-t\" \"4096\"",
-             "description" : "Flashing u-boot-env1",
-             "mandatory" : true,
-             "restrict" : null,
-             "retry" : 2,
-             "timeout" : 60000,
-             "tool" : "dfuDownloader"
-            },
-            {
-             "args" : "\"--alt\" \"boot\" \"-D\" \"${boot_file}\" \"-t\" \"4096\"",
-             "description" : "Flashing boot",
-             "mandatory" : true,
-             "restrict" : null,
-             "retry" : 2,
-             "timeout" : 60000,
-             "tool" : "dfuDownloader"
-            },
-            {
-             "args" : "\"--alt\" \"update\" \"-D\" \"${update_file}\" \"-t\" \"4096\"",
-             "description" : "Flashing update partition",
-             "mandatory" : true,
-             "restrict" : null,
-             "retry" : 2,
-             "timeout" : 1200000,
-             "tool" : "dfuDownloader"
-            },
-            {
-             "args" : "\"--alt\" \"rootfs\" \"-D\" \"${rootfs_file}\" \"-t\" \"4096\" -R",
-             "description" : "Flashing rootfs",
-             "mandatory" : true,
-             "restrict" : null,
-             "retry" : 2,
-             "timeout" : 1200000,
-             "tool" : "dfuDownloader"
-            }
+   {
+    "args" : "\"--alt\" \"u-boot-env0\" \"-D\" \"${u-boot-env_file}\" \"-t\" \"4096\"",
+    "description" : "Flashing u-boot-env0",
+    "mandatory" : true,
+    "restrict" : null,
+    "retry" : 2,
+    "timeout" : 60000,
+    "tool" : "dfuDownloader"
+   },
+   {
+    "args" : "\"--alt\" \"u-boot-env1\" \"-D\" \"${u-boot-env_file}\" \"-t\" \"4096\"",
+    "description" : "Flashing u-boot-env1",
+    "mandatory" : true,
+    "restrict" : null,
+    "retry" : 2,
+    "timeout" : 60000,
+    "tool" : "dfuDownloader"
+   },
+   {
+    "args" : "\"--alt\" \"boot\" \"-D\" \"${boot_file}\" \"-t\" \"4096\"",
+    "description" : "Flashing boot",
+    "mandatory" : true,
+    "restrict" : null,
+    "retry" : 2,
+    "timeout" : 60000,
+    "tool" : "dfuDownloader"
+   },
+   {
+    "args" : "\"--alt\" \"update\" \"-D\" \"${update_file}\" \"-t\" \"4096\"",
+    "description" : "Flashing update partition",
+    "mandatory" : true,
+    "restrict" : null,
+    "retry" : 2,
+    "timeout" : 1200000,
+    "tool" : "dfuDownloader"
+   },
+   {
+    "args" : "\"--alt\" \"rootfs\" \"-D\" \"${rootfs_file}\" \"-t\" \"4096\" -R",
+    "description" : "Flashing rootfs",
+    "mandatory" : true,
+    "restrict" : null,
+    "retry" : 2,
+     "timeout" : 1200000,
+     "tool" : "dfuDownloader"
+   }
   ],
   "configurations" :   {
    "default" :    {
@@ -82,13 +82,11 @@
     },
     "name" : "Default",
     "parameters" :     {
-     
     },
     "startState" : "dnx_fw"
    }
   },
   "groups" :   {
-   
   },
   "osplatform" : "android",
   "parameters" :   {
