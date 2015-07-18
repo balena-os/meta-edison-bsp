@@ -2,6 +2,25 @@
  "flash" :  {
   "commands" : [
    {
+    "duration" : 42000,
+    "restrict" : null,
+    "source" : "${helperFile}",
+    "tool" : "notifier"
+   },
+   {
+    "description" : "Waiting for device",
+    "restrict" : null,
+    "state" : "dnx_fw",
+    "timeout" : 42000,
+    "tool" : "waitForDevice"
+   },
+   {
+    "duration" : 5000,
+    "restrict" : null,
+    "source" : "Edison board plugged",
+    "tool" : "notifier"
+   },
+   {
     "gpflag" : "${gpflag}",
     "ifwi" : "${ifwi_file}",
     "ifwi_dnx" : "${fw_dnx_file}",
@@ -45,6 +64,18 @@
     "tool" : "dfuDownloader"
    },
    {
+    "duration" : 6000,
+    "restrict" : null,
+    "tool" : "sleep"
+   },
+   {
+    "description" : "Waiting for device",
+    "restrict" : null,
+    "state" : "pos",
+    "timeout" : 120000,
+    "tool" : "waitForDevice"
+   },
+   {
     "args" : "\"--alt\" \"boot\" \"-D\" \"${boot_file}\" \"-t\" \"4096\"",
     "description" : "Flashing boot",
     "mandatory" : true,
@@ -63,13 +94,22 @@
     "tool" : "dfuDownloader"
    },
    {
-    "args" : "\"--alt\" \"rootfs\" \"-D\" \"${rootfs_file}\" \"-t\" \"4096\" -R",
+    "args" : "\"--alt\" \"rootfs\" \"-D\" \"${rootfs_file}\" \"-t\" \"4096\" \"-R",
     "description" : "Flashing rootfs",
     "mandatory" : true,
     "restrict" : null,
     "retry" : 2,
      "timeout" : 1200000,
      "tool" : "dfuDownloader"
+   },
+   {
+    "duration" : 60000,
+    "restrict" : null,
+    "source" : "Edison board needs to reboot<br />
+                Please do not unplug it for 2 minutes<br /><br />
+                On Arduino board, led will stop blinking at boot completed<br /><br />
+                <img src='images/Edison-arduino-blink-led.png' width='390' />",
+    "tool" : "notifier"
    }
   ],
   "configurations" :   {
@@ -78,7 +118,6 @@
     "default" : true,
     "description" : "Default configuration",
     "groupsState" :     {
-     
     },
     "name" : "Default",
     "parameters" :     {
@@ -108,6 +147,12 @@
     "type" : "string",
     "value" : "0x80000007"
    },
+   "helperFile" :    {
+    "description" : "helperFile",
+    "name" : "helperFile",
+    "type" : "file",
+    "value" : "helper/helper.html"
+   },
    "ifwi_file" :    {
     "description" : "Firmware",
     "name" : "Firmware",
@@ -125,12 +170,6 @@
     "name" : "OS",
     "type" : "file",
     "value" : "u-boot-edison.img"
-   },
-   "pid" :    {
-    "description" : "Product id",
-    "name" : "Product id",
-    "type" : "string",
-    "value" : "0a99"
    },
    "rootfs_file" :    {
     "description" : "Rootfs",
@@ -155,14 +194,8 @@
     "name" : "Update",
     "type" : "file",
     "value" : "edison-image-edison.update.hddimg"
-   },
-   "vid" :    {
-    "description" : "Vendor id",
-    "name" : "Vendor id",
-    "type" : "string",
-    "value" : "8087"
    }
   },
-  "version" : "2.1"
+  "version" : "2.2"
  }
 }

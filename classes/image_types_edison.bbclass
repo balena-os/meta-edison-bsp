@@ -68,6 +68,7 @@ IMAGE_CMD_toflash () {
 
 	rm -rf 	${WORKDIR}/toFlash
 	install -d ${WORKDIR}/toFlash/u-boot-envs/
+	install -d ${WORKDIR}/toFlash/helper/images
 
 	install ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.ext4	${WORKDIR}/toFlash/edison-image-edison.ext4
 	install ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.hddimg	${WORKDIR}/toFlash/edison-image-edison.hddimg
@@ -79,9 +80,13 @@ IMAGE_CMD_toflash () {
 
 	install ${DEPLOY_DIR_IMAGE}/ifwi/*.bin			${WORKDIR}/toFlash/
 
-	install ${DEPLOY_DIR_IMAGE}/flashall/filter-dfu-out.js		${WORKDIR}/toFlash/
-	install ${DEPLOY_DIR_IMAGE}/flashall/flashall.*			${WORKDIR}/toFlash/
-	install ${DEPLOY_DIR_IMAGE}/flashall/FlashEdison.json		${WORKDIR}/toFlash/
+	install ${DEPLOY_DIR_IMAGE}/flashall/filter-dfu-out.js	${WORKDIR}/toFlash/
+	install ${DEPLOY_DIR_IMAGE}/flashall/flashall.*		${WORKDIR}/toFlash/
+
+	install ${DEPLOY_DIR_IMAGE}/flashall/FlashEdison.json	${WORKDIR}/toFlash/
+	install ${DEPLOY_DIR_IMAGE}/flashall/helper/helper.html	${WORKDIR}/toFlash/helper/
+	install ${DEPLOY_DIR_IMAGE}/flashall/helper/images/*.png ${WORKDIR}/toFlash/helper/images/
+
 
 	# generate a formatted list of all packages included in the image
 	awk '{print $1 " " $3}' ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.rootfs.manifest > ${WORKDIR}/toFlash/package-list.txt
