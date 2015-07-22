@@ -46,19 +46,45 @@
     "tool" : "dfuDownloader"
    },
    {
-    "args" : "\"--alt\" \"u-boot-env0\" \"-D\" \"${u-boot-env_file}\" \"-t\" \"4096\"",
+    "args" : "\"--alt\" \"u-boot-env0\" \"-D\" \"${u-boot-env_file_rndis}\" \"-t\" \"4096\"",
     "description" : "Flashing u-boot-env0",
     "mandatory" : true,
-    "restrict" : null,
+    "restrict" : [
+      "rndis_env"
+    ],
     "retry" : 2,
     "timeout" : 60000,
     "tool" : "dfuDownloader"
    },
    {
-    "args" : "\"--alt\" \"u-boot-env1\" \"-D\" \"${u-boot-env_file}\" \"-t\" \"4096\"",
+    "args" : "\"--alt\" \"u-boot-env0\" \"-D\" \"${u-boot-env_file_cdc}\" \"-t\" \"4096\"",
+    "description" : "Flashing u-boot-env0",
+    "mandatory" : true,
+    "restrict" : [
+      "cdc_env"
+    ],
+    "retry" : 2,
+    "timeout" : 60000,
+    "tool" : "dfuDownloader"
+   },
+   {
+    "args" : "\"--alt\" \"u-boot-env1\" \"-D\" \"${u-boot-env_file_rndis}\" \"-t\" \"4096\" \"-R\"",
     "description" : "Flashing u-boot-env1",
     "mandatory" : true,
-    "restrict" : null,
+    "restrict" : [
+      "rndis_env"
+    ],
+    "retry" : 2,
+    "timeout" : 60000,
+    "tool" : "dfuDownloader"
+   },
+   {
+    "args" : "\"--alt\" \"u-boot-env1\" \"-D\" \"${u-boot-env_file_cdc}\" \"-t\" \"4096\" \"-R\"",
+    "description" : "Flashing u-boot-env1",
+    "mandatory" : true,
+    "restrict" : [
+      "cdc_env"
+    ],
     "retry" : 2,
     "timeout" : 60000,
     "tool" : "dfuDownloader"
@@ -113,13 +139,26 @@
    }
   ],
   "configurations" :   {
-   "default" :    {
-    "brief" : "Default configuration",
-    "default" : true,
-    "description" : "Default configuration",
+   "cdc_env" :    {
+    "brief" : "CDC USB driver (Mac OS/Linux)",
+    "default" : false,
+    "description" : "U-Boot CDC environment",
+    "documentation" : "",
     "groupsState" :     {
     },
-    "name" : "Default",
+    "name" : "CDC (Mac/Linux)",
+    "parameters" :     {
+    },
+    "startState" : "dnx_fw"
+   },
+   "rndis_env" :    {
+    "brief" : "RNDIS USB driver (Windows)",
+    "default" : true,
+    "description" : "U-Boot RNDIS environment",
+    "documentation" : "",
+    "groupsState" :     {
+    },
+    "name" : "RNDIS (Windows)",
     "parameters" :     {
     },
     "startState" : "dnx_fw"
@@ -177,9 +216,15 @@
     "type" : "file",
     "value" : "edison-image-edison.ext4"
    },
-   "u-boot-env_file" :    {
-    "description" : "U-Boot primary environment",
-    "name" : "U-Boot primary environment",
+   "u-boot-env_file_cdc" :    {
+    "description" : "U-Boot CDC environment",
+    "name" : "U-Boot CDC environment",
+    "type" : "file",
+    "value" : "u-boot-envs/edison-blankcdc.bin"
+   },
+   "u-boot-env_file_rndis" :    {
+    "description" : "U-Boot RNDIS environment",
+    "name" : "U-Boot RNDIS environment",
     "type" : "file",
     "value" : "u-boot-envs/edison-blankrndis.bin"
    },
