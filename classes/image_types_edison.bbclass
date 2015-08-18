@@ -40,7 +40,7 @@ IMAGE_CMD_update () {
 
 	# create disk image with fat32 primary partition on all available space
 	dd if=/dev/zero of=${WORKDIR}/update.img bs=1024 count=$UPDATE_BLOCKS
-	echo -ne "n\np\n1\n\n\nt\nb\np\nw\n" | fdisk ${WORKDIR}/update.img
+	printf "n\np\n1\n\n\nt\nb\np\nw\n" | fdisk ${WORKDIR}/update.img
 
 	# Create fat file system image
 	mkfs.vfat -n "Edison" -S 512 -C ${WORKDIR}/fat.img $FAT_BLOCKS
