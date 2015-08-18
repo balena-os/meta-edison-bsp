@@ -35,8 +35,12 @@ IMAGE_CMD_update () {
 	UPDATE_BLOCKS=786432
 	FAT_BLOCKS=785408
 
+	# clean up from previous builds
 	rm -f ${WORKDIR}/update.img
 	rm -f ${WORKDIR}/fat.img
+	rm -f ${WORKDIR}/update.tar
+	rm -f ${WORKDIR}/update.tar.gz
+
 
 	# create disk image with fat32 primary partition on all available space
 	dd if=/dev/zero of=${WORKDIR}/update.img bs=1024 count=$UPDATE_BLOCKS
@@ -59,6 +63,17 @@ IMAGE_CMD_update () {
 
 	install ${WORKDIR}/update.img ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.update.hddimg
 	ln -s ${IMAGE_NAME}.update.hddimg ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.update.hddimg
+
+	# Create update archive
+	tar -cf ${WORKDIR}/update.tar -C /tmp image-name.txt
+	tar --transform='flags=r;s|${IMAGE_NAME}.rootfs.tar.bz2|rootfs.tar.bz2|' -rf ${WORKDIR}/update.tar -C ${DEPLOY_DIR_IMAGE} ${IMAGE_NAME}.rootfs.tar.bz2
+	tar --transform='flags=r;s|${IMAGE_NAME}.hddimg|boot.hddimg|' -rf ${WORKDIR}/update.tar -C ${DEPLOY_DIR_IMAGE} ${IMAGE_NAME}.hddimg
+	tar --transform='flags=r;s|u-boot-edison.bin|u-boot.bin|' -rhf ${WORKDIR}/update.tar -C ${DEPLOY_DIR_IMAGE} u-boot-edison.bin
+	tar --transform='flags=r;s|edison-blankrndis.bin|u-boot.env|' -rf ${WORKDIR}/update.tar -C ${DEPLOY_DIR_IMAGE}/u-boot-envs edison-blankrndis.bin
+	gzip ${WORKDIR}/update.tar
+
+	install ${WORKDIR}/update.tar.gz ${DEPLOY_DIR_IMAGE}/${IMAGE_NAME}.update.tar.gz
+	ln -s ${IMAGE_NAME}.update.tar.gz ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.update.tar.gz
 }
 
 IMAGE_DEPENDS_toflash = "ifwi flashall u-boot u-boot-mkimage-native"
