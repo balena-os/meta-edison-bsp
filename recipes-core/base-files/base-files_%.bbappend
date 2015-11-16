@@ -1,1 +1,1 @@
-FILESEXTRAPATHS_prepend := "${THISDIR}/base-files:"
+FILESEXTRAPATHS_prepend_edison := "${THISDIR}/base-files:"
