@@ -1,6 +1,6 @@
 DESCRIPTION = "U-boot bootloader fw_printenv/setenv utils"
 LICENSE = "GPLv2+"
-LIC_FILES_CHKSUM = "file://Licenses/README;md5=025bf9f768cbcb1a165dbe1a110babfb"
+LIC_FILES_CHKSUM = "file://Licenses/README;md5=0507cd7da8e7ad6d6701926ec9b84c95"
 SECTION = "bootloader"
 
 require u-boot-internal.inc
@@ -17,12 +17,15 @@ do_compile () {
 
 do_install () {
   install -d ${D}${sbindir}
-  install -m 755 ${S}/tools/env/fw_printenv_unstripped ${D}${sbindir}/fw_printenv
+  install -m 755 ${S}/tools/env/fw_printenv ${D}${sbindir}/fw_printenv
   # This is not a typo, this tool checks the args[0] to change its behavior a-la-busybox
-  install -m 755 ${S}/tools/env/fw_printenv_unstripped ${D}${sbindir}/fw_setenv
+  install -m 755 ${S}/tools/env/fw_printenv ${D}${sbindir}/fw_setenv
 }
 
 FILES_${PN} = "${sbindir}/*"
 FILES_${PN} += "${sysconfdir}/fw_env.config"
 
 DEPENDS = "u-boot"
+
+INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
+INSANE_SKIP_${PN} = "already-stripped"
