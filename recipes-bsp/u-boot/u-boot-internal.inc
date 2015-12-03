@@ -1,3 +1,5 @@
+COMPATIBLE_MACHINE = "edison"
+
 PV = "2015.10"
 S = "${WORKDIR}/git"
 
