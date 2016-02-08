@@ -5,6 +5,8 @@ S = "${WORKDIR}/git"
 
 PACKAGE_ARCH = "${MACHINE_ARCH}"
 
+DEPENDS += "dtc-native"
+
 SRC_URI = "git://github.com/01org/edison-u-boot.git;branch=edison-v2015.10;protocol=git" 
 SRC_URI += "file://${MACHINE}.env"
 SRC_URI += "file://target_env/*.env"
