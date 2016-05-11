@@ -3,6 +3,7 @@ HOMEPAGE = "http://www.intel.com"
 
 LICENSE = "Intel-OBL-Binary-Firmware-License"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=41b172554812bbdd8ef5b0711639b69b"
+NO_GENERIC_LICENSE[Intel-OBL-Binary-Firmware-License] = "LICENSE"
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files/:"
 
