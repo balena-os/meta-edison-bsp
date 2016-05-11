@@ -12,5 +12,8 @@ require recipes-kernel/linux/linux-yocto.inc
 
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
-COMPATIBLE_MACHINE = "edison"
+# Fix the KERNEL_OUTPUT variable
+# Bug introduced in a6f52930a68d8462e23486d51cdda715072dd752
+KERNEL_OUTPUT = "arch/x86/boot/${KERNEL_IMAGETYPE}"
 
+COMPATIBLE_MACHINE = "edison"
