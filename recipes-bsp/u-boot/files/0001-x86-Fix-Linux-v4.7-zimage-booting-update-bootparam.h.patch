@@ -1,0 +1,42 @@
+From 88d915b10f44e044dfd874e201a4ce1fcdbff59a Mon Sep 17 00:00:00 2001
+From: Stefan Roese <sr@denx.de>
+Date: Fri, 30 Sep 2016 09:15:59 +0200
+Subject: [PATCH] x86: Fix Linux v4.7+ zimage booting (update bootparam.h)
+
+Booting Linux kernel v4.7+ does not work since Linux kernel commit 974f221c
+"x86/boot: Move compressed kernel to the end of the decompression buffer".
+
+This patch adds the latest version of the setup_header struct, adding
+"init_size" which is needed since this commit referenced above. With this
+patch, booting Linux v4.8-rc8 does work again on x86 boards.
+
+Signed-off-by: Stefan Roese <sr@denx.de>
+Reviewed-by: Simon Glass <sjg@chromium.org>
+Reviewed-by: Bin Meng <bmeng.cn@gmail.com>
+Tested-by: Bin Meng <bmeng.cn@gmail.com>
+
+Upstream-Status: Backport
+
+Signed-off-by: Florin Sarbu <florin@resin.io>
+
+---
+ arch/x86/include/asm/bootparam.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/arch/x86/include/asm/bootparam.h b/arch/x86/include/asm/bootparam.h
+index 1400951..a373a79 100644
+--- a/arch/x86/include/asm/bootparam.h
++++ b/arch/x86/include/asm/bootparam.h
+@@ -63,6 +63,9 @@ struct setup_header {
+ 	__u32	payload_offset;
+ 	__u32	payload_length;
+ 	__u64	setup_data;
++	__u64	pref_address;
++	__u32	init_size;
++	__u32	handover_offset;
+ } __attribute__((packed));
+ 
+ struct sys_desc_table {
+-- 
+2.9.5
+
