@@ -1,0 +1,8 @@
+This is the BSP repository for the Intel Edison board.
+======================================================
+
+Original code is a copy from git://sandbox.sakoman.com/meta-edison-bsp.git
+but as this repository is no longer available we host now a last good known clone.
+
+The master branch and pyro have started to diverge from the original code as we now
+switched to using the vanilla 4.x kernel.
