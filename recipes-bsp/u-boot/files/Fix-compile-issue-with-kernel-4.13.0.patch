@@ -1,0 +1,31 @@
+From 1f89d8cc5f80d358e5a827738ca96b8e00408a3f Mon Sep 17 00:00:00 2001
+From: Florin Sarbu <florin@resin.io>
+Date: Sun, 12 Nov 2017 13:58:28 +0100
+Subject: [PATCH] Fix compile issue with kernel 4.13.0
+
+tools/env/fw_env.c:54:2: error: unknown type name 'uint8_t'
+
+Upstream-Status: Pending
+Signed-off-by: Florin Sarbu <florin@resin.io>
+---
+ tools/env/fw_env.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tools/env/fw_env.c b/tools/env/fw_env.c
+index daa02a7..1d6629d 100644
+--- a/tools/env/fw_env.c
++++ b/tools/env/fw_env.c
+@@ -22,9 +22,9 @@
+ #include <sys/ioctl.h>
+ #include <sys/stat.h>
+ #include <unistd.h>
++#include <stdint.h>
+ 
+ #ifdef MTD_OLD
+-# include <stdint.h>
+ # include <linux/mtd/mtd.h>
+ #else
+ # define  __user	/* nothing */
+-- 
+2.7.4
+
