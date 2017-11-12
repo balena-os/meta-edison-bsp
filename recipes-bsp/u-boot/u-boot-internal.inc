@@ -13,5 +13,5 @@ SRC_URI += " \
     file://0002-Add-compiler-gcc6.h-header-file.patch \
     "
 SRC_URI += "file://${MACHINE}.env"
-SRC_URI += "file://target_env/*.env"
+SRC_URI += "file://target_env/"
 SRCREV = "2e2b030bc6ed039b3b27225ee3486bd5b5d9f5a4"
