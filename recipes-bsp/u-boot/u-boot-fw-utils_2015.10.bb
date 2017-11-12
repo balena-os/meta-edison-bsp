@@ -6,9 +6,12 @@ SECTION = "bootloader"
 require u-boot-internal.inc
 
 FILESEXTRAPATHS_prepend := "${THISDIR}/files:"
-SRC_URI += "file://fw_env.config"
+SRC_URI += " \
+    file://fw_env.config \
+    file://default-gcc.patch \
+    "
 
-EXTRA_OEMAKE = 'CROSS_COMPILE=${TARGET_PREFIX} CC="${TARGET_PREFIX}gcc ${TOOLCHAIN_OPTIONS}"'
+EXTRA_OEMAKE = 'CROSS_COMPILE=${TARGET_PREFIX} CC="${CC} ${CFLAGS} ${LDFLAGS}" HOSTCC="${BUILD_CC} ${BUILD_CFLAGS} ${BUILD_LDFLAGS}" V=1'
 
 do_compile () {
   oe_runmake ${UBOOT_MACHINE}
