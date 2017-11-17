@@ -3,7 +3,7 @@ KBRANCH ?= "standard/base"
 require recipes-kernel/linux/linux-yocto.inc
 
 SRC_URI = " \
-    git://github.com/andy-shev/linux.git;protocol=https;branch=eds \
+    git://github.com/resin-os/linux-edison;protocol=https;branch=eds-4.13 \
     file://0001-Add-kernel-parameter-to-enable-i2c_6-pinctrl-mapping.patch \
     "
 
