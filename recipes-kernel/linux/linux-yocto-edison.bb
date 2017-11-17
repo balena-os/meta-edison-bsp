@@ -7,7 +7,7 @@ SRC_URI = " \
     file://0001-Add-kernel-parameter-to-enable-i2c_6-pinctrl-mapping.patch \
     "
 
-SRCREV = "54f9552249b720ef9d33a7eb9e0d1f8f53ce1025"
+SRCREV = "417835b0c7d072649b2de13ba9dfe6eb5f3b8775"
 
 LINUX_VERSION ?= "4.13.0"
 LINUX_VERSION_EXTENSION = "-edison-${LINUX_KERNEL_TYPE}"
