@@ -1,0 +1,86 @@
+From 24c009ef86e71cf0f7a882edc27ac410dfe62bff Mon Sep 17 00:00:00 2001
+From: Sebastian Panceac <sebastian@resin.com>
+Date: Thu, 21 Dec 2017 16:17:56 +0200
+Subject: [PATCH] Enable pwm0,1,2,3 pinmux on Edison board
+
+Upstream-Status: Inappropriate [this would better be done from uboot]
+Signed-off-by: Sebastian Panceac <sebastian@resin.io>
+---
+ .../intel-mid/device_libs/platform_mrfld_pinctrl.c | 43 ++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+
+diff --git a/arch/x86/platform/intel-mid/device_libs/platform_mrfld_pinctrl.c b/arch/x86/platform/intel-mid/device_libs/platform_mrfld_pinctrl.c
+index 779e39b..64cef79 100644
+--- a/arch/x86/platform/intel-mid/device_libs/platform_mrfld_pinctrl.c
++++ b/arch/x86/platform/intel-mid/device_libs/platform_mrfld_pinctrl.c
+@@ -23,6 +23,7 @@
+ #define FLIS_LENGTH			0x8000
+ 
+ static bool pinctrl_i2c6 = true;
++static bool pinctrl_pwm = true;
+ 
+ static struct resource mrfld_pinctrl_mmio_resource = {
+ 	.start		= FLIS_BASE_ADDR,
+@@ -48,6 +49,41 @@ static const struct pinctrl_map mapping[] __initconst = {
+ 	},
+ };
+ 
++static const struct pinctrl_map pwm_mapping[] __initconst = {
++	{
++		.dev_name = "0000:00:09.1",
++		.name = PINCTRL_STATE_DEFAULT,
++		.type = PIN_MAP_TYPE_MUX_GROUP,
++		.ctrl_dev_name = "pinctrl-merrifield",
++		.data.mux.group = "pwm0_grp",
++		.data.mux.function = "pwm0",
++	},
++	{
++		.dev_name = "0000:00:09.1",
++		.name = PINCTRL_STATE_DEFAULT,
++		.type = PIN_MAP_TYPE_MUX_GROUP,
++		.ctrl_dev_name = "pinctrl-merrifield",
++		.data.mux.group = "pwm1_grp",
++		.data.mux.function = "pwm1",
++	},
++	{
++		.dev_name = "0000:00:09.1",
++		.name = PINCTRL_STATE_DEFAULT,
++		.type = PIN_MAP_TYPE_MUX_GROUP,
++		.ctrl_dev_name = "pinctrl-merrifield",
++		.data.mux.group = "pwm2_grp",
++		.data.mux.function = "pwm2",
++	},
++	{
++		.dev_name = "0000:00:09.1",
++		.name = PINCTRL_STATE_DEFAULT,
++		.type = PIN_MAP_TYPE_MUX_GROUP,
++		.ctrl_dev_name = "pinctrl-merrifield",
++		.data.mux.group = "pwm3_grp",
++		.data.mux.function = "pwm3",
++	},
++};
++
+ static int __init mrfld_pinctrl_init(void)
+ {
+ 	int ret;
+@@ -65,9 +100,17 @@ static int __init mrfld_pinctrl_init(void)
+ 			pr_err("Failed to register i2c6 pinctrl mapping\n");
+ 	}
+ 
++	if (pinctrl_pwm) {
++		ret = pinctrl_register_mappings(pwm_mapping, ARRAY_SIZE(pwm_mapping));
++		if (ret)
++			pr_err("Failed to register pwm0..3 pinctrl mapping\n");
++	}
++
++
+ 	return 0;
+ }
+ arch_initcall(mrfld_pinctrl_init);
+ 
+ module_param(pinctrl_i2c6, bool, 0444);
++module_param(pinctrl_pwm, bool, 0444);
+ MODULE_PARM_DESC(pinctrl_i2c6, "Configure pinctrl to use i2c-6");
+-- 
+2.7.4
+
