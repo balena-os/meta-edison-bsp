@@ -5,6 +5,7 @@ require recipes-kernel/linux/linux-yocto.inc
 SRC_URI = " \
     git://github.com/resin-os/linux-edison;protocol=https;branch=eds-4.13 \
     file://0001-Add-kernel-parameter-to-enable-i2c_6-pinctrl-mapping.patch \
+    file://0002-Enable-pwm0-1-2-3-pinmux-on-Edison-board.patch \
     "
 
 SRCREV = "54f9552249b720ef9d33a7eb9e0d1f8f53ce1025"
