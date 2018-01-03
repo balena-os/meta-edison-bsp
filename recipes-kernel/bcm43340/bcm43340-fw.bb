@@ -22,7 +22,9 @@ PR = "r5"
 
 FILES_${PN} += "/lib/firmware/brcm/* ${base_libdir}/systemd/system/bluetooth_attach.service"
 
-inherit allarch update-alternatives
+inherit allarch update-alternatives systemd
+
+SYSTEMD_SERVICE_${PN} = "bluetooth_attach.service"
 
 do_install() {
         install -v -d  ${D}/lib/firmware/brcm/
