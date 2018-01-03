@@ -51,7 +51,7 @@ enum {
 /* list of all supported chips:
    name is defined in the kernel driver implementing rfkill interface for power */
 #define BCM_RFKILL_NAME "bcm43xx Bluetooth\n"
-#define BCM_43341_UART_DEV "/dev/ttyMFD0"
+#define BCM_43341_UART_DEV "/dev/ttyS0"
 #define BD_ADD_FACTORY_FILE "/factory/bluetooth_address"
 char factory_bd_add[18];
 const char default_bd_addr[] = "00:43:34:b1:be:ef";
