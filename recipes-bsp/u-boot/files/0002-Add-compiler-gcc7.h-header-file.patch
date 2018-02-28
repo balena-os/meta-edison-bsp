@@ -1,25 +1,25 @@
 From 4de8e7a1fb120b4f6b4052e84c600eeb7969dc4d Mon Sep 17 00:00:00 2001
 From: Florin Sarbu <florin@resin.io>
-Date: Sat, 11 Nov 2017 11:50:33 +0100
-Subject: [PATCH] Add compiler-gcc6.h header file
+Date: Sat, 28 Feb 2018 11:50:33 +0100
+Subject: [PATCH] Add compiler-gcc7.h header file
 
-This file is a copy of compiler-gcc5.h
+This file is derived from compiler-gcc5.h
 
 Upstream-Status: Inappropriate [upstream u-boot does not use compiler-gccX.h anymore]
 Signed-off-by: Florin Sarbu <florin@resin.io>
 ---
- include/linux/compiler-gcc6.h | 65 +++++++++++++++++++++++++++++++++++++++++++
+ include/linux/compiler-gcc7.h | 65 +++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 65 insertions(+)
- create mode 100644 include/linux/compiler-gcc6.h
+ create mode 100644 include/linux/compiler-gcc7.h
 
-diff --git a/include/linux/compiler-gcc6.h b/include/linux/compiler-gcc6.h
+diff --git a/include/linux/compiler-gcc7.h b/include/linux/compiler-gcc7.h
 new file mode 100644
 index 0000000..622117b
 --- /dev/null
-+++ b/include/linux/compiler-gcc6.h
++++ b/include/linux/compiler-gcc7.h
 @@ -0,0 +1,65 @@
 +#ifndef __LINUX_COMPILER_H
-+#error "Please don't include <linux/compiler-gcc6.h> directly, include <linux/compiler.h> instead."
++#error "Please don't include <linux/compiler-gcc7.h> directly, include <linux/compiler.h> instead."
 +#endif
 +
 +#define __used				__attribute__((__used__))
