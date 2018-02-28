@@ -1,6 +1,6 @@
 inherit image_types
 
-IMAGE_DEPENDS_boot = "virtual/kernel dosfstools-native mtools-native"
+do_image_boot[depends] += "virtual/kernel dosfstools-native mtools-native"
 IMAGE_TYPEDEP_boot = "ext4 tar"
 
 IMAGE_CMD_boot () {
@@ -27,7 +27,7 @@ IMAGE_CMD_boot () {
 	ln -s ${IMAGE_NAME}.hddimg ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.hddimg
 }
 
-IMAGE_DEPENDS_update = "dosfstools-native mtools-native"
+do_image_update[depends] += "dosfstools-native mtools-native"
 IMAGE_TYPEDEP_update = "tar.bz2"
 
 IMAGE_CMD_update () {
@@ -76,7 +76,7 @@ IMAGE_CMD_update () {
 	ln -s ${IMAGE_NAME}.update.tar.gz ${DEPLOY_DIR_IMAGE}/${IMAGE_BASENAME}-${MACHINE}.update.tar.gz
 }
 
-IMAGE_DEPENDS_toflash = "ifwi flashall u-boot u-boot-mkimage-native"
+do_image_toflash[depends] += "ifwi flashall u-boot u-boot-mkimage-native"
 IMAGE_TYPEDEP_toflash = "ext4 boot update"
 
 IMAGE_CMD_toflash () {
