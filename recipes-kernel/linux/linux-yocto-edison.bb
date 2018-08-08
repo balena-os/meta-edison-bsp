@@ -15,12 +15,7 @@ LINUX_VERSION_EXTENSION = "-edison-${LINUX_KERNEL_TYPE}"
 
 PV = "${LINUX_VERSION}+git${SRCPV}"
 
-KMETA = "kernel-meta"
-KCONF_BSP_AUDIT_LEVEL = "2"
-
-# this tells yocto to use the defconfig supplied with the kernel
-KBUILD_DEFCONFIG = "i386_defconfig"
-# this tells yocto to expand the defconfig, i.e. make defconfig
-KCONFIG_MODE = "--alldefconfig"
-
 COMPATIBLE_MACHINE = "edison"
+
+# work around a bug which makes the build system use the x86-64 kernel config instead of the x86-32 bits one
+do_kernel_configme[depends] += "virtual/kernel:do_prepare_recipe_sysroot"
