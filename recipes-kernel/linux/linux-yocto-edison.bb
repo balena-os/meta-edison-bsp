@@ -1,5 +1,6 @@
 KBRANCH ?= "standard/base"
 
+inherit kernel
 require recipes-kernel/linux/linux-yocto.inc
 
 SRC_URI = " \
